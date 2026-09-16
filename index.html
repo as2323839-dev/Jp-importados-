@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JP Importados</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0b0b;
+      color: white;
+    }
+
+    header {
+      background: #050505;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #b89545;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .logo {
+      color: #d4af37;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #d4af37;
+    }
+
+    .hero {
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+      background:
+        radial-gradient(circle at center, #3a2b08 0%, #111 35%, #050505 75%);
+    }
+
+    .hero h1 {
+      color: #d4af37;
+      font-size: 58px;
+      letter-spacing: 4px;
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: #ddd;
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+
+    .botao {
+      display: inline-block;
+      background: #d4af37;
+      color: #080808;
+      padding: 15px 35px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .botao:hover {
+      background: white;
+    }
+
+    section {
+      padding: 60px 7%;
+    }
+
+    .titulo {
+      text-align: center;
+      color: #d4af37;
+      font-size: 32px;
+      margin-bottom: 35px;
+    }
+
+    .categorias {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .categoria {
+      border: 1px solid #d4af37;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .categoria:hover {
+      background: #d4af37;
+      color: #000;
+    }
+
+    .produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+    }
+
+    .produto {
+      background: #151515;
+      border: 1px solid #292929;
+      border-radius: 8px;
+      overflow: hidden;
+      padding-bottom: 20px;
+      text-align: center;
+    }
+
+    .produto .foto {
+      height: 230px;
+      background: linear-gradient(135deg, #242424, #0c0c0c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #777;
+    }
+
+    .produto h3 {
+      margin: 18px 10px 8px;
+    }
+
+    .preco {
+      color: #d4af37;
+      font-size: 21px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    footer {
+      background: #050505;
+      border-top: 1px solid #b89545;
+      text-align: center;
+      padding: 30px;
+      color: #aaa;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 0 6px;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">JP IMPORTADOS</div>
+
+    <nav>
+      <a href="#inicio">Início</a>
+      <a href="#categorias">Categorias</a>
+      <a href="#produtos">Produtos</a>
+      <a href="#ofertas">Ofertas</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero" id="inicio">
+      <div>
+        <h1>JP IMPORTADOS</h1>
+        <p>Elegância, qualidade e estilo em um só lugar.</p>
+        <a class="botao" href="#produtos">COMPRE AGORA</a>
+      </div>
+    </section>
+
+    <section id="categorias">
+      <h2 class="titulo">Nossas Categorias</h2>
+
+      <div class="categorias">
+        <a class="categoria" href="#">Beleza</a>
+        <a class="categoria" href="#">Relógios</a>
+        <a class="categoria" href="#">Moda</a>
+        <a class="categoria" href="#">Bolsas</a>
+        <a class="categoria" href="#">Calçados</a>
+        <a class="categoria" href="#">Acessórios</a>
+        <a class="categoria" href="#ofertas">Ofertas</a>
+      </div>
+    </section>
+
+    <section id="produtos">
+      <h2 class="titulo">Destaques</h2>
+
+      <div class="produtos">
+
+        <div class="produto">
+          <div class="foto">Foto do produto</div>
+          <h3>Produto em destaque</h3>
+          <div class="preco">R$ 00,00</div>
+          <a class="botao" href="#">Comprar</a>
+        </div>
+
+        <div class="produto">
+          <div class="foto">Foto do produto</div>
+          <h3>Produto em destaque</h3>
+          <div class="preco">R$ 00,00</div>
+          <a class="botao" href="#">Comprar</a>
+        </div>
+
+        <div class="produto">
+          <div class="foto">Foto do produto</div>
+          <h3>Produto em destaque</h3>
+          <div class="preco">R$ 00,00</div>
+          <a class="botao" href="#">Comprar</a>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="ofertas">
+      <h2 class="titulo">Ofertas Especiais</h2>
+      <p style="text-align:center; color:#ccc; margin-bottom:25px;">
+        Aproveite nossas novidades e promoções.
+      </p>
+
+      <div style="text-align:center;">
+        <a class="botao" href="#produtos">VER OFERTAS</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 JP Importados — Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+</html>
+
