@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const { getInventory, savePendingOrder, hasDatabase } = require('./db');
 
 const CATALOG = {
   'oculos': { name: 'Óculos de Sol', price: 74.90, stock: 6 },
@@ -21,31 +22,41 @@ function validEmail(v) {
 
 function splitName(name = '') {
   const parts = String(name).trim().split(/\s+/).filter(Boolean);
-  return {
-    first_name: parts.shift() || '',
-    last_name: parts.join(' ') || undefined
-  };
+  return { first_name: parts.shift() || '', last_name: parts.join(' ') || undefined };
 }
 
 function clean(v, max = 120) {
   return String(v || '').trim().slice(0, max);
 }
 
-function calculateCart(items) {
+async function calculateCart(items) {
   if (!Array.isArray(items) || !items.length) throw new Error('Carrinho vazio.');
+  const inventoryRows = hasDatabase() ? await getInventory() : null;
+  const liveStock = new Map((inventoryRows || []).map(row => [row.product_id, Number(row.stock)]));
   let totalCents = 0;
   const normalized = [];
+
   for (const item of items) {
     const p = CATALOG[item && item.id];
     const quantity = Number(item && item.quantity);
-    if (!p || !Number.isInteger(quantity) || quantity < 1 || quantity > p.stock) {
-      throw new Error('Produto ou quantidade inválida.');
+    const available = liveStock.has(item && item.id) ? liveStock.get(item.id) : (p && p.stock);
+    if (!p || !Number.isInteger(quantity) || quantity < 1 || quantity > Number(available || 0)) {
+      throw new Error('Produto sem estoque suficiente ou quantidade inválida.');
     }
     const unitCents = Math.round(p.price * 100);
     totalCents += unitCents * quantity;
     normalized.push({ id: item.id, name: p.name, quantity, unit_price: p.price, total: (unitCents * quantity) / 100 });
   }
   return { total: totalCents / 100, items: normalized };
+}
+
+function paymentInfo(order) {
+  const payments = order && order.transactions && order.transactions.payments;
+  const payment = Array.isArray(payments) ? payments[0] : null;
+  return {
+    status: (payment && payment.status) || (order && order.status) || '',
+    detail: (payment && payment.status_detail) || (order && order.status_detail) || ''
+  };
 }
 
 module.exports = async function handler(req, res) {
@@ -59,11 +70,9 @@ module.exports = async function handler(req, res) {
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
     const { method, payer, card, delivery } = body;
-    const cart = calculateCart(body.items);
+    const cart = await calculateCart(body.items);
 
-    if (!payer || !validEmail(payer.email)) {
-      return res.status(400).json({ error: 'E-mail do comprador inválido.' });
-    }
+    if (!payer || !validEmail(payer.email)) return res.status(400).json({ error: 'E-mail do comprador inválido.' });
 
     const names = splitName(payer.name);
     const cpf = String(payer.cpf || '').replace(/\D/g, '');
@@ -89,6 +98,12 @@ module.exports = async function handler(req, res) {
 
     const externalReference = `jp-${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
     const d = delivery || {};
+    const safeDelivery = {
+      cep: clean(d.cep, 12), street: clean(d.street, 160), number: clean(d.number, 30),
+      neighborhood: clean(d.neighborhood, 100), city: clean(d.city, 100), state: clean(d.state, 60),
+      complement: clean(d.complement, 120)
+    };
+
     const payload = {
       type: 'online',
       processing_mode: 'automatic',
@@ -115,13 +130,13 @@ module.exports = async function handler(req, res) {
           last_name: names.last_name ? clean(names.last_name, 120) : undefined,
           phone: phone ? { number: phone } : undefined,
           address: {
-            zip_code: clean(d.cep, 12),
-            street_name: clean(d.street, 160),
-            street_number: clean(d.number, 30),
-            neighborhood: clean(d.neighborhood, 100),
-            city: clean(d.city, 100),
-            state: clean(d.state, 60),
-            complement: clean(d.complement, 120)
+            zip_code: safeDelivery.cep,
+            street_name: safeDelivery.street,
+            street_number: safeDelivery.number,
+            neighborhood: safeDelivery.neighborhood,
+            city: safeDelivery.city,
+            state: safeDelivery.state,
+            complement: safeDelivery.complement
           }
         }
       },
@@ -142,16 +157,38 @@ module.exports = async function handler(req, res) {
     const data = await mp.json();
     if (!mp.ok) return res.status(mp.status).json({ error: 'Mercado Pago recusou a solicitação.', mercado_pago: data });
 
+    const info = paymentInfo(data);
+    let persisted = false;
+    try {
+      persisted = await savePendingOrder({
+        mp_order_id: data.id ? String(data.id) : null,
+        external_reference: data.external_reference || externalReference,
+        status: info.status,
+        status_detail: info.detail,
+        approved: false,
+        total_amount: cart.total,
+        customer_name: clean(payer.name, 180),
+        customer_email: clean(payer.email, 160),
+        customer_phone: phone,
+        delivery: safeDelivery,
+        items: cart.items
+      });
+    } catch (dbErr) {
+      console.error('Order persistence error', String(dbErr && dbErr.message || dbErr));
+    }
+
     return res.status(mp.status).json({
       ...data,
       test_mode: false,
+      database: hasDatabase(),
+      order_persisted: Boolean(persisted),
       validated_total: cart.total,
       validated_items: cart.items,
       external_reference: data.external_reference || externalReference
     });
   } catch (err) {
     const message = String(err && err.message || err);
-    const status = /Carrinho|Produto|quantidade|comprador|CPF/.test(message) ? 400 : 500;
+    const status = /Carrinho|Produto|quantidade|estoque|comprador|CPF/.test(message) ? 400 : 500;
     return res.status(status).json({ error: message || 'Erro ao criar pagamento.' });
   }
 };
