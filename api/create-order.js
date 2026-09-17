@@ -104,44 +104,53 @@ module.exports = async function handler(req, res) {
       complement: clean(d.complement, 120)
     };
 
-    const payload = {
-      type: 'online',
-      processing_mode: 'automatic',
-      total_amount: cart.total.toFixed(2),
-      external_reference: externalReference,
-      description: `Pedido ${externalReference} - JP Importados`,
-      payer: {
-        email: clean(payer.email, 160),
-        first_name: clean(names.first_name, 80),
-        last_name: names.last_name ? clean(names.last_name, 120) : undefined,
-        identification: { type: 'CPF', number: cpf }
-      },
-      items: cart.items.map(item => ({
-        title: item.name,
-        external_code: item.id,
-        quantity: item.quantity,
-        unit_price: item.unit_price.toFixed(2),
-        total_amount: item.total.toFixed(2),
-        unit_measure: 'unit'
-      })),
-      additional_info: {
-        payer: {
-          first_name: clean(names.first_name, 80),
-          last_name: names.last_name ? clean(names.last_name, 120) : undefined,
-          phone: phone ? { number: phone } : undefined,
-          address: {
-            zip_code: safeDelivery.cep,
-            street_name: safeDelivery.street,
-            street_number: safeDelivery.number,
-            neighborhood: safeDelivery.neighborhood,
-            city: safeDelivery.city,
-            state: safeDelivery.state,
-            complement: safeDelivery.complement
-          }
+    const payload = method === 'pix'
+      ? {
+          type: 'online',
+          processing_mode: 'automatic',
+          total_amount: cart.total.toFixed(2),
+          external_reference: externalReference,
+          transactions: { payments: [payment] },
+          payer: { email: clean(payer.email, 160) }
         }
-      },
-      transactions: { payments: [payment] }
-    };
+      : {
+          type: 'online',
+          processing_mode: 'automatic',
+          total_amount: cart.total.toFixed(2),
+          external_reference: externalReference,
+          description: `Pedido ${externalReference} - JP Importados`,
+          payer: {
+            email: clean(payer.email, 160),
+            first_name: clean(names.first_name, 80),
+            last_name: names.last_name ? clean(names.last_name, 120) : undefined,
+            identification: { type: 'CPF', number: cpf }
+          },
+          items: cart.items.map(item => ({
+            title: item.name,
+            external_code: item.id,
+            quantity: item.quantity,
+            unit_price: item.unit_price.toFixed(2),
+            total_amount: item.total.toFixed(2),
+            unit_measure: 'unit'
+          })),
+          additional_info: {
+            payer: {
+              first_name: clean(names.first_name, 80),
+              last_name: names.last_name ? clean(names.last_name, 120) : undefined,
+              phone: phone ? { number: phone } : undefined,
+              address: {
+                zip_code: safeDelivery.cep,
+                street_name: safeDelivery.street,
+                street_number: safeDelivery.number,
+                neighborhood: safeDelivery.neighborhood,
+                city: safeDelivery.city,
+                state: safeDelivery.state,
+                complement: safeDelivery.complement
+              }
+            }
+          },
+          transactions: { payments: [payment] }
+        };
 
     const mp = await fetch('https://api.mercadopago.com/v1/orders', {
       method: 'POST',
