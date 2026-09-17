@@ -7,6 +7,6 @@
     document.head.appendChild(s);
   }
   loadScript('/checkout-core.js?v=20260917',function(){
-    loadScript('/mobile-fix.js?v=20260917c');
+    loadScript('/mobile-fix.js?v=20260917d');
   });
 })();
