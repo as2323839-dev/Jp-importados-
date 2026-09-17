@@ -80,15 +80,16 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Dados do cartão incompletos.' });
     }
 
+    const testMode = /^TEST-/i.test(process.env.MERCADO_PAGO_PUBLIC_KEY || '');
     const payload = {
       type: 'online',
       processing_mode: 'automatic',
       total_amount: cart.total.toFixed(2),
       external_reference: `jp-${Date.now()}`,
       payer: {
-        email: payer.email,
-        first_name: names.first_name,
-        last_name: names.last_name,
+        email: testMode ? 'test_user_br@testuser.com' : payer.email,
+        first_name: testMode ? 'APRO' : names.first_name,
+        last_name: testMode ? undefined : names.last_name,
         identification: { type: 'CPF', number: cpf }
       },
       transactions: { payments: [payment] }
@@ -110,6 +111,7 @@ module.exports = async function handler(req, res) {
 
     return res.status(mp.status).json({
       ...data,
+      test_mode: testMode,
       validated_total: cart.total,
       validated_items: cart.items
     });
