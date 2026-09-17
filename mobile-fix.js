@@ -4,9 +4,9 @@
   style.textContent=`
     @media (max-width:600px){
       html,body{margin:0!important;background:#000!important;overflow-x:hidden!important}
-      .site{display:block!important;width:100%!important;max-width:100%!important;margin:0 auto!important;overflow:hidden!important}
-      .site>img{display:block!important;width:100%!important;height:auto!important;object-fit:contain!important}
-      .search{font-size:10px!important}
+      .site{display:block!important;position:relative!important;width:100vw!important;height:100dvh!important;max-width:none!important;margin:0!important;overflow:hidden!important;background:#000!important}
+      .site>img{display:block!important;width:100%!important;height:100%!important;object-fit:fill!important}
+      .search{font-size:11px!important}
       .account-actions{left:84.5%!important;top:9.4%!important;width:13.8%!important;height:10.2%!important}
       .icon-btn{padding:13%!important}
       .overlay{align-items:flex-start!important;padding:6px!important}
