@@ -12,39 +12,39 @@
       .jp-mobile-top div{background:#070707;padding:10px 5px;text-align:center;color:#d8c79f;font-size:9px;line-height:1.25}
       .jp-mobile-top b{display:block;color:#efbd5a;font-size:9px;margin-bottom:2px}
       .jp-mobile-head{padding:16px max(16px,env(safe-area-inset-left)) 14px max(16px,env(safe-area-inset-right));background:#050505;border-bottom:1px solid #5c3b1a}
-      .jp-mobile-brandrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
-      .jp-mobile-brand{display:flex;align-items:center;gap:8px;min-width:0}
+      .jp-mobile-brandrow{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:14px}
+      .jp-mobile-brand{display:flex;align-items:center;justify-content:center;gap:10px;min-width:0}
       .jp-mobile-mark{font-family:Georgia,serif;font-size:44px;font-weight:900;line-height:.9;color:#efbd5a}
       .jp-mobile-brandtext strong{display:block;font-family:Georgia,serif;color:#efbd5a;font-size:20px;letter-spacing:1px}
       .jp-mobile-brandtext small{display:block;color:#b7a076;font-size:8px;letter-spacing:.8px;margin-top:3px}
-      .jp-mobile-icons{display:flex;align-items:center;gap:8px}
+      .jp-mobile-icons{display:flex;align-items:center;justify-content:center;gap:14px}
       .jp-mobile-icon{position:relative;width:44px;height:44px;min-width:44px;min-height:44px;border:1px solid #3f2a12;background:#090909;color:#fff;display:grid;place-items:center;padding:0;border-radius:50%;touch-action:manipulation}
       .jp-mobile-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
       .jp-mobile-badge{position:absolute;right:-2px;top:-3px;min-width:18px;height:18px;padding:0 4px;border-radius:999px;background:#e7a934;color:#080808;font-size:10px;font-weight:900;display:grid;place-items:center}
       .jp-mobile-searchwrap{display:flex;width:100%;height:50px;margin-top:14px;border:1px solid #9b6724;border-radius:999px;overflow:hidden;background:#0d0d0d}
-      .jp-mobile-searchwrap input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;padding:0 16px;font-size:14px}
+      .jp-mobile-searchwrap input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;padding:0 18px;font-size:16px}
       .jp-mobile-searchwrap button{width:52px;border:0;background:#e3a735;color:#080808;font-size:18px;font-weight:900}
-      .jp-mobile-nav{display:grid!important;grid-template-columns:repeat(2,1fr)!important;width:100%!important;position:static!important;margin:0!important;padding:10px 12px!important;gap:10px!important;border:0!important;border-bottom:1px solid #5c3b1a!important;border-radius:0!important;background:#050505!important;box-shadow:none!important}
-      .jp-mobile-nav button{min-height:52px;border:1px solid #5f3d19;background:#0b0b0b;color:#fff;padding:12px 8px;border-radius:10px;font-size:12px;font-weight:800;touch-action:manipulation}
+      .jp-mobile-nav{display:grid!important;grid-template-columns:1fr!important;width:100%!important;position:static!important;margin:0!important;padding:12px 16px!important;gap:12px!important;border:0!important;border-bottom:1px solid #5c3b1a!important;border-radius:0!important;background:#050505!important;box-shadow:none!important}
+      .jp-mobile-nav button{min-height:58px;border:1px solid #5f3d19;background:#0b0b0b;color:#fff;padding:14px 12px;border-radius:12px;font-size:15px;font-weight:800;touch-action:manipulation}
       .jp-mobile-hero{position:relative;width:100%;height:min(430px,55dvh);min-height:340px;background:url('site-reference.jpeg?v=mobile-hero-4') center 82%/220% auto no-repeat #000;border-bottom:1px solid #5c3b1a;cursor:pointer;touch-action:manipulation}
       .jp-mobile-hero:after{content:'VER PRODUTOS →';position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:78%;max-width:340px;padding:13px 14px;border:1px solid #b97a22;background:rgba(223,167,53,.96);color:#080808;border-radius:999px;text-align:center;font-weight:900;font-size:14px;line-height:1.2;box-sizing:border-box}
-      .jp-mobile-benefits{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#3f2913;border-bottom:1px solid #5c3b1a}
+      .jp-mobile-benefits{display:grid;grid-template-columns:1fr;gap:1px;background:#3f2913;border-bottom:1px solid #5c3b1a}
       .jp-mobile-benefits div{background:#080808;padding:16px 10px;text-align:center;color:#cdb98f;font-size:11px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center}
       .jp-mobile-benefits b{display:block;color:#efbd5a;font-size:10px;margin-bottom:2px}
       .jp-mobile-section{padding:26px 16px;background:#020202}
-      .jp-mobile-section h2{margin:0;text-align:center;color:#efbd5a;font-family:Georgia,serif;font-size:23px;letter-spacing:.8px}
-      .jp-mobile-section .sub{margin:5px 0 16px;text-align:center;color:#a99368;font-size:11px}
-      .jp-mobile-catgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-      .jp-mobile-cat{min-height:88px;border:1px solid #6f471d;background:#0a0a0a;color:#efbd5a;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;padding:14px 10px;text-align:center;touch-action:manipulation}
+      .jp-mobile-section h2{margin:0;text-align:center;color:#efbd5a;font-family:Georgia,serif;font-size:28px;letter-spacing:.8px}
+      .jp-mobile-section .sub{margin:8px 0 20px;text-align:center;color:#a99368;font-size:13px}
+      .jp-mobile-catgrid{display:grid;grid-template-columns:1fr;gap:14px}
+      .jp-mobile-cat{min-height:64px;border:1px solid #6f471d;background:#0a0a0a;color:#efbd5a;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;padding:16px 12px;text-align:center;touch-action:manipulation}
       .jp-mobile-products{display:block!important;padding:0 14px 26px;background:#020202}
-      .jp-mobile-productgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+      .jp-mobile-productgrid{display:grid;grid-template-columns:1fr;gap:16px}
       .jp-mobile-card{background:#0b0b0b;border:1px solid #5d3b18;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
       .jp-mobile-card img{width:100%;aspect-ratio:1/1;object-fit:contain;background:#111;display:block}
       .jp-mobile-cardbody{padding:10px;display:flex;flex-direction:column;gap:5px;flex:1}
-      .jp-mobile-card h3{margin:0;color:#fff;font-size:13px;line-height:1.2}
-      .jp-mobile-price{color:#efbd5a;font-size:16px;font-weight:900}
-      .jp-mobile-stock{color:#9b9b9b;font-size:10px}
-      .jp-mobile-card button{margin-top:auto;min-height:46px;border:1px solid #b77a22;background:#dca33b;color:#080808;border-radius:10px;padding:10px 8px;font-weight:900;font-size:12px;touch-action:manipulation}
+      .jp-mobile-card h3{margin:0;color:#fff;font-size:18px;line-height:1.25}
+      .jp-mobile-price{color:#efbd5a;font-size:22px;font-weight:900}
+      .jp-mobile-stock{color:#9b9b9b;font-size:13px}
+      .jp-mobile-card button{margin-top:auto;min-height:54px;border:1px solid #b77a22;background:#dca33b;color:#080808;border-radius:10px;padding:12px 10px;font-weight:900;font-size:15px;touch-action:manipulation}
       .jp-mobile-more{width:100%;min-height:50px;margin-top:16px;border:1px solid #8a5b20;background:#111;color:#efbd5a;border-radius:10px;padding:12px;font-weight:900;touch-action:manipulation}
       .jp-mobile-footer{padding:18px 14px 28px;border-top:1px solid #5c3b1a;background:#050505;text-align:center}
       .jp-mobile-footer a{display:inline-flex;text-decoration:none;border:1px solid #8a5b20;color:#efbd5a;border-radius:999px;padding:11px 18px;font-size:12px;font-weight:900}
