@@ -1,5 +1,14 @@
 const crypto = require('crypto');
 
+const CATALOG = {
+  'oculos': { name: 'Óculos de Sol', price: 74.90, stock: 6 },
+  'relogio-prata': { name: 'Relógio Prata', price: 49.90, stock: 1 },
+  'invictus': { name: 'Invictus', price: 470.00, stock: 2 },
+  'one-million': { name: '1 Million', price: 544.90, stock: 1 },
+  'relogio-dourado': { name: 'Relógio Dourado', price: 1190.00, stock: 1 },
+  'relogio-dourado-2': { name: 'Relógio Dourado 2', price: 1140.00, stock: 1 }
+};
+
 function cors(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -8,6 +17,30 @@ function cors(res) {
 
 function validEmail(v) {
   return typeof v === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+}
+
+function splitName(name = '') {
+  const parts = String(name).trim().split(/\s+/).filter(Boolean);
+  return {
+    first_name: parts.shift() || '',
+    last_name: parts.join(' ') || undefined
+  };
+}
+
+function calculateCart(items) {
+  if (!Array.isArray(items) || !items.length) throw new Error('Carrinho vazio.');
+  let totalCents = 0;
+  const normalized = [];
+  for (const item of items) {
+    const p = CATALOG[item && item.id];
+    const quantity = Number(item && item.quantity);
+    if (!p || !Number.isInteger(quantity) || quantity < 1 || quantity > p.stock) {
+      throw new Error('Produto ou quantidade inválida.');
+    }
+    totalCents += Math.round(p.price * 100) * quantity;
+    normalized.push({ id: item.id, name: p.name, quantity, unit_price: p.price });
+  }
+  return { total: totalCents / 100, items: normalized };
 }
 
 module.exports = async function handler(req, res) {
@@ -20,18 +53,19 @@ module.exports = async function handler(req, res) {
 
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
-    const { method, amount, payer, external_reference, card } = body;
-    const total = Number(amount);
+    const { method, payer, card } = body;
+    const cart = calculateCart(body.items);
 
-    if (!Number.isFinite(total) || total <= 0) {
-      return res.status(400).json({ error: 'Valor inválido.' });
-    }
     if (!payer || !validEmail(payer.email)) {
       return res.status(400).json({ error: 'E-mail do comprador inválido.' });
     }
 
+    const names = splitName(payer.name);
+    const cpf = String(payer.cpf || '').replace(/\D/g, '');
+    if (cpf.length !== 11) return res.status(400).json({ error: 'CPF inválido.' });
+
     const payment = {
-      amount: total.toFixed(2),
+      amount: cart.total.toFixed(2),
       payment_method: method === 'pix'
         ? { id: 'pix', type: 'bank_transfer' }
         : {
@@ -49,13 +83,13 @@ module.exports = async function handler(req, res) {
     const payload = {
       type: 'online',
       processing_mode: 'automatic',
-      total_amount: total.toFixed(2),
-      external_reference: external_reference || `jp-${Date.now()}`,
+      total_amount: cart.total.toFixed(2),
+      external_reference: `jp-${Date.now()}`,
       payer: {
         email: payer.email,
-        first_name: payer.first_name || undefined,
-        last_name: payer.last_name || undefined,
-        identification: payer.identification || undefined
+        first_name: names.first_name,
+        last_name: names.last_name,
+        identification: { type: 'CPF', number: cpf }
       },
       transactions: { payments: [payment] }
     };
@@ -72,8 +106,16 @@ module.exports = async function handler(req, res) {
     });
 
     const data = await mp.json();
-    return res.status(mp.status).json(data);
+    if (!mp.ok) return res.status(mp.status).json({ error: 'Mercado Pago recusou a solicitação.', mercado_pago: data });
+
+    return res.status(mp.status).json({
+      ...data,
+      validated_total: cart.total,
+      validated_items: cart.items
+    });
   } catch (err) {
-    return res.status(500).json({ error: 'Erro ao criar pagamento.', detail: String(err && err.message || err) });
+    const message = String(err && err.message || err);
+    const status = /Carrinho|Produto|quantidade/.test(message) ? 400 : 500;
+    return res.status(status).json({ error: message || 'Erro ao criar pagamento.' });
   }
 };
