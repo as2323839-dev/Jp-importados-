@@ -27,6 +27,10 @@ function splitName(name = '') {
   };
 }
 
+function clean(v, max = 120) {
+  return String(v || '').trim().slice(0, max);
+}
+
 function calculateCart(items) {
   if (!Array.isArray(items) || !items.length) throw new Error('Carrinho vazio.');
   let totalCents = 0;
@@ -37,8 +41,9 @@ function calculateCart(items) {
     if (!p || !Number.isInteger(quantity) || quantity < 1 || quantity > p.stock) {
       throw new Error('Produto ou quantidade inválida.');
     }
-    totalCents += Math.round(p.price * 100) * quantity;
-    normalized.push({ id: item.id, name: p.name, quantity, unit_price: p.price });
+    const unitCents = Math.round(p.price * 100);
+    totalCents += unitCents * quantity;
+    normalized.push({ id: item.id, name: p.name, quantity, unit_price: p.price, total: (unitCents * quantity) / 100 });
   }
   return { total: totalCents / 100, items: normalized };
 }
@@ -53,7 +58,7 @@ module.exports = async function handler(req, res) {
 
   try {
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
-    const { method, payer, card } = body;
+    const { method, payer, card, delivery } = body;
     const cart = calculateCart(body.items);
 
     if (!payer || !validEmail(payer.email)) {
@@ -62,7 +67,9 @@ module.exports = async function handler(req, res) {
 
     const names = splitName(payer.name);
     const cpf = String(payer.cpf || '').replace(/\D/g, '');
+    const phone = String(payer.phone || '').replace(/\D/g, '').slice(0, 15);
     if (cpf.length !== 11) return res.status(400).json({ error: 'CPF inválido.' });
+    if (!names.first_name) return res.status(400).json({ error: 'Nome do comprador inválido.' });
 
     const payment = {
       amount: cart.total.toFixed(2),
@@ -80,17 +87,43 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: 'Dados do cartão incompletos.' });
     }
 
-    const testMode = /^TEST-/i.test(process.env.MERCADO_PAGO_PUBLIC_KEY || '');
+    const externalReference = `jp-${Date.now()}-${crypto.randomUUID().slice(0, 8)}`;
+    const d = delivery || {};
     const payload = {
       type: 'online',
       processing_mode: 'automatic',
       total_amount: cart.total.toFixed(2),
-      external_reference: `jp-${Date.now()}`,
+      external_reference: externalReference,
+      description: `Pedido ${externalReference} - JP Importados`,
       payer: {
-        email: testMode ? 'test_user_br@testuser.com' : payer.email,
-        first_name: testMode ? 'APRO' : names.first_name,
-        last_name: testMode ? undefined : names.last_name,
+        email: clean(payer.email, 160),
+        first_name: clean(names.first_name, 80),
+        last_name: names.last_name ? clean(names.last_name, 120) : undefined,
         identification: { type: 'CPF', number: cpf }
+      },
+      items: cart.items.map(item => ({
+        title: item.name,
+        external_code: item.id,
+        quantity: item.quantity,
+        unit_price: item.unit_price.toFixed(2),
+        total_amount: item.total.toFixed(2),
+        unit_measure: 'unit'
+      })),
+      additional_info: {
+        payer: {
+          first_name: clean(names.first_name, 80),
+          last_name: names.last_name ? clean(names.last_name, 120) : undefined,
+          phone: phone ? { number: phone } : undefined,
+          address: {
+            zip_code: clean(d.cep, 12),
+            street_name: clean(d.street, 160),
+            street_number: clean(d.number, 30),
+            neighborhood: clean(d.neighborhood, 100),
+            city: clean(d.city, 100),
+            state: clean(d.state, 60),
+            complement: clean(d.complement, 120)
+          }
+        }
       },
       transactions: { payments: [payment] }
     };
@@ -101,7 +134,7 @@ module.exports = async function handler(req, res) {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'X-Idempotency-Key': crypto.randomUUID()
+        'X-Idempotency-Key': externalReference
       },
       body: JSON.stringify(payload)
     });
@@ -111,13 +144,14 @@ module.exports = async function handler(req, res) {
 
     return res.status(mp.status).json({
       ...data,
-      test_mode: testMode,
+      test_mode: false,
       validated_total: cart.total,
-      validated_items: cart.items
+      validated_items: cart.items,
+      external_reference: data.external_reference || externalReference
     });
   } catch (err) {
     const message = String(err && err.message || err);
-    const status = /Carrinho|Produto|quantidade/.test(message) ? 400 : 500;
+    const status = /Carrinho|Produto|quantidade|comprador|CPF/.test(message) ? 400 : 500;
     return res.status(status).json({ error: message || 'Erro ao criar pagamento.' });
   }
 };
