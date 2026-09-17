@@ -26,12 +26,8 @@
       .jp-mobile-searchwrap button{width:52px;border:0;background:#e3a735;color:#080808;font-size:18px;font-weight:900}
       .jp-mobile-nav{display:grid!important;grid-template-columns:repeat(4,1fr)!important;width:100%!important;position:static!important;margin:0!important;padding:0!important;gap:0!important;border:0!important;border-bottom:1px solid #5c3b1a!important;border-radius:0!important;background:#050505!important;box-shadow:none!important}
       .jp-mobile-nav button{border:0;background:transparent;color:#fff;padding:12px 2px;font-size:10px;font-weight:800}
-      .jp-mobile-hero{position:relative;width:100%;min-height:360px;background:url('site-reference.jpeg?v=mobile-hero-3') center 52%/220% auto no-repeat #000;border-bottom:1px solid #5c3b1a;display:flex;align-items:flex-end;justify-content:center;padding:20px 14px}
-      .jp-mobile-hero:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.18) 58%,rgba(0,0,0,.78) 100%)}
-      .jp-mobile-hero-card{position:relative;z-index:1;width:100%;max-width:390px;text-align:center;padding:14px;background:rgba(0,0,0,.72);border:1px solid #8a5b20;border-radius:14px}
-      .jp-mobile-hero-card h1{margin:0;color:#efbd5a;font-family:Georgia,serif;font-size:27px;letter-spacing:.6px}
-      .jp-mobile-hero-card p{margin:6px 0 12px;color:#e3d0a8;font-size:12px}
-      .jp-mobile-primary{width:100%;border:1px solid #b97a22;background:#dfa735;color:#080808;border-radius:999px;padding:13px 14px;font-weight:900;font-size:14px}
+      .jp-mobile-hero{position:relative;width:100%;height:360px;background:url('site-reference.jpeg?v=mobile-hero-4') center 82%/220% auto no-repeat #000;border-bottom:1px solid #5c3b1a;cursor:pointer}
+      .jp-mobile-hero:after{content:'VER PRODUTOS →';position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:78%;max-width:340px;padding:13px 14px;border:1px solid #b97a22;background:rgba(223,167,53,.96);color:#080808;border-radius:999px;text-align:center;font-weight:900;font-size:14px;line-height:1.2;box-sizing:border-box}
       .jp-mobile-benefits{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#3f2913;border-bottom:1px solid #5c3b1a}
       .jp-mobile-benefits div{background:#080808;padding:12px 8px;text-align:center;color:#cdb98f;font-size:10px}
       .jp-mobile-benefits b{display:block;color:#efbd5a;font-size:10px;margin-bottom:2px}
@@ -81,7 +77,7 @@
       <div class="jp-mobile-searchwrap"><input id="jpMobileSearch" type="search" placeholder="O que você está procurando?" aria-label="Pesquisar produtos"><button id="jpMobileSearchBtn" type="button">⌕</button></div>
     </header>
     <nav class="jp-mobile-nav"><button type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">INÍCIO</button><button type="button" onclick="openProducts()">PRODUTOS</button><button type="button" onclick="openAbout()">SOBRE NÓS</button><button type="button" onclick="openContact()">CONTATO</button></nav>
-    <section class="jp-mobile-hero"><div class="jp-mobile-hero-card"><h1>JP IMPORTADOS</h1><p>Qualidade • estilo • confiança</p><button class="jp-mobile-primary" type="button" onclick="openProducts()">VER PRODUTOS →</button></div></section>
+    <section class="jp-mobile-hero" role="button" tabindex="0" aria-label="Ver produtos" onclick="openProducts()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProducts()}"></section>
     <section class="jp-mobile-benefits"><div><b>PRODUTOS ORIGINAIS</b>Com garantia</div><div><b>ENVIO RÁPIDO</b>E rastreamento</div><div><b>COMPRA SEGURA</b>Dados protegidos</div><div><b>ATENDIMENTO</b>Antes e depois da compra</div></section>
     <section class="jp-mobile-section"><h2>CATEGORIAS</h2><p class="sub">ENCONTRE O QUE VOCÊ PRECISA</p><div class="jp-mobile-catgrid"><button class="jp-mobile-cat" onclick="openProducts('Tênis')">TÊNIS</button><button class="jp-mobile-cat" onclick="openProducts('Roupas')">ROUPAS</button><button class="jp-mobile-cat" onclick="openProducts('Relógios')">RELÓGIOS</button><button class="jp-mobile-cat" onclick="openProducts('Bolsas')">BOLSAS</button><button class="jp-mobile-cat" onclick="openProducts('Perfumes')">PERFUMES</button><button class="jp-mobile-cat" onclick="openProducts('Óculos')">ÓCULOS</button><button class="jp-mobile-cat" onclick="openProducts('Eletrônicos')">ELETRÔNICOS</button><button class="jp-mobile-cat" onclick="openProducts()">VER TODOS</button></div></section>
     <section class="jp-mobile-section" style="padding-bottom:10px"><h2>PRODUTOS</h2><p class="sub">ESCOLHA SEU PRODUTO</p></section>
