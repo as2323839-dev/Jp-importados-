@@ -2,152 +2,56 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070707">
+<meta name="description" content="JP Importados — produtos selecionados, perfumes, relógios, óculos e muito mais. Atendimento pelo WhatsApp.">
 <title>JP Importados</title>
 <style>
-:root{--gold:#dca33b;--gold2:#efbd5a;--panel:#080808;--line:#35220d}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;background:#000}
-body{margin:0;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif;min-height:100vh;overflow-x:hidden}
-button,input{font:inherit}
-a{color:inherit}
-.site{position:relative;width:100%;max-width:1536px;margin:0 auto;line-height:0;overflow:hidden}
-.site>img{display:block;width:100%;height:auto;user-select:none;-webkit-user-drag:none}
-.hotspot{position:absolute;display:block;z-index:5;cursor:pointer;border-radius:8px}
-.hotspot:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
-.hotspot:hover{outline:1px solid rgba(255,190,70,.18)}
-.inicio{left:30%;top:14.5%;width:5.2%;height:5.8%}
-.produtos{left:35.3%;top:14.5%;width:6.5%;height:5.8%}
-.categorias{left:42.1%;top:14.5%;width:8.4%;height:5.8%}
-.sobre{left:52.8%;top:14.5%;width:6.8%;height:5.8%}
-.contato{left:60.5%;top:14.5%;width:6.7%;height:5.8%}
-.cart-hotspot{left:91.8%;top:8.7%;width:5%;height:8.2%}
-.ver-produtos{left:15%;top:52.2%;width:16.3%;height:7.5%;border-radius:35px}
-.tenis{left:6.4%;top:83%;width:12.5%;height:13.5%}
-.roupas{left:19.7%;top:83%;width:12.5%;height:13.5%}
-.relogios{left:32.1%;top:83%;width:12.7%;height:13.5%}
-.bolsas{left:44.8%;top:83%;width:12.5%;height:13.5%}
-.perfumes{left:57.7%;top:83%;width:12.5%;height:13.5%}
-.oculos{left:70.5%;top:83%;width:12.5%;height:13.5%}
-.eletronicos{left:83%;top:83%;width:11.5%;height:13.5%}
-.search{position:absolute;z-index:6;left:29.2%;top:9.1%;width:40.5%;height:4.8%;background:transparent;border:0;outline:0;color:#fff;padding:0 4%;font-size:clamp(10px,1vw,14px);line-height:normal}
-.search::placeholder{color:transparent}
-.search:focus{box-shadow:inset 0 -1px 0 rgba(239,189,90,.55)}
-.badge{position:absolute;z-index:7;right:3.7%;top:8.1%;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--gold);color:#050505;font-weight:800;font-size:11px;display:flex;align-items:center;justify-content:center;line-height:20px;pointer-events:none}
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:1000;display:none;align-items:center;justify-content:center;padding:22px}
-.overlay.open{display:flex}
-.modal{width:min(1100px,96vw);max-height:90dvh;overflow:auto;background:var(--panel);border:1px solid #b8791d;border-radius:16px;box-shadow:0 20px 80px rgba(0,0,0,.6);line-height:1.35}
-.modal-head{position:sticky;top:0;z-index:2;background:var(--panel);display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}
-.modal-head h2{margin:0;color:var(--gold2);font-size:22px}
-.close{border:1px solid #7a4d17;background:#111;color:#fff;border-radius:50%;width:40px;height:40px;cursor:pointer;font-size:22px}
-.toolbar{display:flex;gap:10px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid #24170a}
-.toolbar button,.pdf-btn{background:#111;color:var(--gold2);border:1px solid #80511b;padding:10px 14px;border-radius:999px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
-.toolbar button.active{background:var(--gold);color:#050505}
-.products-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:20px}
-.card{background:#0d0d0d;border:1px solid #2d2114;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
-.card .emoji{font-size:44px;line-height:1}
-.card h3{margin:0;color:#fff;font-size:17px}
-.card .price{color:var(--gold2);font-size:20px;font-weight:800}
-.card .stock{font-size:12px;color:#aaa}
-.card .actions{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
-.card button{flex:1 1 130px;border:1px solid #b77a22;background:var(--gold);color:#080808;padding:10px 12px;border-radius:8px;font-weight:800;cursor:pointer}
-.card button.secondary{background:#111;color:var(--gold2)}
-.empty{padding:30px;color:#aaa;grid-column:1/-1;text-align:center}
-.cart-panel{padding:18px 20px}
-.cart-item{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;border-bottom:1px solid #2a1d0f;padding:12px 0}
-.qty{display:flex;align-items:center;gap:8px}
-.qty button{width:32px;height:32px;border:1px solid #7f541f;background:#111;color:var(--gold2);border-radius:6px;cursor:pointer}
-.cart-total{display:flex;justify-content:space-between;align-items:center;font-size:20px;font-weight:800;color:var(--gold2);padding:18px 0}
-.checkout{width:100%;border:0;background:#25D366;color:#071b0d;font-weight:900;padding:14px;border-radius:10px;cursor:pointer;font-size:16px}
-.note{color:#aaa;font-size:12px;margin-top:10px}
-.aboutbox,.contactbox{padding:26px 22px;color:#ddd}
-.aboutbox h3,.contactbox h3{color:var(--gold2);margin-top:0}
-.contactbox a,.aboutbox a{color:var(--gold2)}
-@media(max-width:850px){.products-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.modal{width:96vw}}
-@media(max-width:600px){
-  .products-grid{grid-template-columns:1fr;padding:12px}
-  .overlay{align-items:flex-start;padding:8px}
-  .modal{max-height:96dvh;border-radius:12px}
-  .modal-head{padding:14px}
-  .toolbar{padding:12px;gap:8px}
-  .toolbar button,.pdf-btn{padding:9px 11px;font-size:13px}
-  .cart-item{grid-template-columns:1fr auto}
-  .cart-item>div:last-child{grid-column:1/-1;text-align:right}
-  .badge{transform:scale(.8);transform-origin:center}
-}
+:root{--bg:#070707;--panel:#111;--panel2:#171717;--gold:#d4a33c;--gold2:#f0c76a;--text:#fff;--muted:#aaa;--line:#2b2418;--green:#25d366;--radius:22px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,Helvetica,sans-serif;line-height:1.5}button,input{font:inherit}a{text-decoration:none;color:inherit}.container{width:min(1180px,92%);margin:auto}.topbar{background:#0d0d0d;border-bottom:1px solid #1f1f1f;color:#cfcfcf;font-size:13px}.topbar .container{display:flex;justify-content:space-between;gap:20px;padding:9px 0;flex-wrap:wrap}.header{position:sticky;top:0;z-index:50;background:rgba(7,7,7,.94);backdrop-filter:blur(12px);border-bottom:1px solid #1e1e1e}.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 0}.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.6px}.brand-mark{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,var(--gold2),#8b5e12);display:grid;place-items:center;color:#111;font-weight:1000;font-size:18px;box-shadow:0 8px 30px rgba(212,163,60,.18)}.navlinks{display:flex;gap:22px;color:#d2d2d2;font-size:14px}.navlinks a:hover{color:var(--gold2)}.actions{display:flex;align-items:center;gap:10px}.iconbtn{border:1px solid #2b2b2b;background:#121212;color:#fff;border-radius:12px;padding:10px 13px;cursor:pointer;position:relative}.badge{position:absolute;right:-7px;top:-7px;min-width:20px;height:20px;border-radius:999px;background:var(--gold);color:#111;font-size:11px;font-weight:900;display:grid;place-items:center;padding:0 5px}.menuBtn{display:none}.hero{padding:72px 0 54px;background:radial-gradient(circle at 80% 20%,rgba(212,163,60,.16),transparent 35%),linear-gradient(180deg,#0a0a0a,#070707)}.hero-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:42px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #493716;background:#17130c;color:var(--gold2);padding:8px 12px;border-radius:999px;font-size:13px;font-weight:800}.hero h1{font-size:clamp(42px,6vw,74px);line-height:.98;margin:20px 0 18px;letter-spacing:-2px}.hero h1 span{color:var(--gold2)}.hero p{max-width:620px;color:#bdbdbd;font-size:18px;margin:0 0 26px}.cta{display:flex;gap:12px;flex-wrap:wrap}.btn{border:0;border-radius:14px;padding:14px 18px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}.btn-primary{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#111}.btn-dark{background:#141414;border:1px solid #303030;color:#fff}.hero-card{border:1px solid #2c2418;border-radius:30px;background:linear-gradient(145deg,#171717,#0d0d0d);min-height:390px;padding:28px;position:relative;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.35)}.hero-card:before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(212,163,60,.15);filter:blur(3px);right:-70px;top:-50px}.showcase{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:space-between}.showcase-icon{font-size:100px;text-align:center;margin-top:35px;filter:drop-shadow(0 14px 24px rgba(0,0,0,.5))}.mini-label{color:var(--gold2);font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase}.showcase h3{font-size:30px;margin:6px 0}.showcase p{font-size:14px;margin:0;color:#a8a8a8}.benefits{padding:22px 0;border-top:1px solid #161616;border-bottom:1px solid #161616}.benefit-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.benefit{padding:18px;border:1px solid #1f1f1f;border-radius:16px;background:#0d0d0d}.benefit b{display:block;margin-bottom:4px}.benefit span{color:#969696;font-size:13px}.section{padding:72px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:28px}.section-head h2{font-size:36px;margin:0}.section-head p{color:#999;margin:8px 0 0}.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.cat{border:1px solid #242424;background:linear-gradient(180deg,#141414,#0e0e0e);border-radius:20px;padding:24px;cursor:pointer;transition:.25s}.cat:hover{transform:translateY(-4px);border-color:#6c5120}.cat .emoji{font-size:38px}.cat b{display:block;font-size:18px;margin-top:16px}.cat span{color:#8f8f8f;font-size:13px}.shopbar{display:flex;gap:12px;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap}.searchbox{flex:1;min-width:240px;display:flex;align-items:center;gap:10px;background:#111;border:1px solid #2a2a2a;border-radius:14px;padding:0 14px}.searchbox input{width:100%;padding:13px 0;background:transparent;border:0;outline:0;color:#fff}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{border:1px solid #2b2b2b;background:#111;color:#ccc;border-radius:999px;padding:9px 13px;cursor:pointer;font-size:13px}.filter.active{background:var(--gold);color:#111;border-color:var(--gold);font-weight:900}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.product{border:1px solid #232323;background:linear-gradient(180deg,#141414,#0d0d0d);border-radius:22px;overflow:hidden;display:flex;flex-direction:column}.product-visual{height:180px;background:radial-gradient(circle at 50% 30%,rgba(212,163,60,.18),transparent 40%),#0c0c0c;display:grid;place-items:center;font-size:72px}.product-body{padding:19px;display:flex;flex-direction:column;gap:10px;flex:1}.product-top{display:flex;justify-content:space-between;gap:10px;align-items:start}.product h3{font-size:18px;margin:0}.tag{font-size:11px;color:var(--gold2);border:1px solid #5a421b;border-radius:999px;padding:5px 8px}.detail{color:#949494;font-size:13px;min-height:38px}.stock{font-size:12px;color:#8f8f8f}.price{font-size:24px;font-weight:1000;color:var(--gold2)}.product-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:auto}.product-actions button{border-radius:12px;padding:11px;border:1px solid #45351a;cursor:pointer;font-weight:800}.add{background:var(--gold);color:#111}.buy{background:#151515;color:#fff}.about{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center}.about-card{border:1px solid #242424;background:#111;border-radius:26px;padding:30px}.about-list{display:grid;gap:14px;margin-top:20px}.about-item{display:flex;gap:12px;color:#cfcfcf}.check{width:26px;height:26px;border-radius:50%;background:#1e1a10;color:var(--gold2);display:grid;place-items:center;flex:0 0 auto}.contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:24px}.contact-card{border:1px solid #252525;background:#111;border-radius:24px;padding:26px}.contact-lines{display:grid;gap:14px;margin-top:20px}.contact-line{padding-bottom:14px;border-bottom:1px solid #242424}.contact-line small{display:block;color:#888}.contact-line b{font-size:16px}.footer{border-top:1px solid #1d1d1d;padding:28px 0 90px;color:#8e8e8e;font-size:13px}.footer-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.wa-float{position:fixed;right:20px;bottom:20px;z-index:60;background:var(--green);color:#071b0d;border:0;border-radius:999px;padding:15px 18px;font-weight:1000;box-shadow:0 12px 40px rgba(37,211,102,.3);cursor:pointer}.drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:80;display:none}.drawer-backdrop.open{display:block}.drawer{position:absolute;right:0;top:0;height:100%;width:min(430px,92vw);background:#0c0c0c;border-left:1px solid #292929;padding:22px;overflow:auto}.drawer-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:16px;border-bottom:1px solid #242424}.close{background:#161616;border:1px solid #333;color:#fff;width:38px;height:38px;border-radius:50%;cursor:pointer}.cart-items{display:grid;gap:12px;margin:18px 0}.cart-item{border:1px solid #252525;border-radius:14px;padding:14px;display:grid;grid-template-columns:1fr auto;gap:12px}.qty{display:flex;align-items:center;gap:8px;margin-top:8px}.qty button{width:30px;height:30px;border-radius:8px;border:1px solid #343434;background:#151515;color:#fff}.cart-total{display:flex;justify-content:space-between;font-size:20px;font-weight:900;padding:18px 0}.empty{color:#999;text-align:center;padding:40px 10px}.mobile-menu{display:none;padding:0 0 16px}.mobile-menu a{display:block;padding:11px 0;border-bottom:1px solid #222;color:#ccc}@media(max-width:900px){.navlinks{display:none}.menuBtn{display:inline-flex}.hero-grid,.about,.contact-grid{grid-template-columns:1fr}.hero{padding-top:48px}.hero-card{min-height:330px}.benefit-grid{grid-template-columns:repeat(2,1fr)}.categories{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.topbar .container{justify-content:center;text-align:center}.hero h1{font-size:46px}.hero p{font-size:16px}.hero-card{min-height:300px}.benefit-grid,.categories,.products{grid-template-columns:1fr}.section{padding:52px 0}.section-head{align-items:start;flex-direction:column}.section-head h2{font-size:30px}.product-actions{grid-template-columns:1fr}.brand span{font-size:14px}.wa-float{right:14px;bottom:14px}.actions .catalog-link{display:none}}
 </style>
 </head>
 <body>
-<div class="site" id="inicio">
-  <img src="site-reference.jpeg" alt="JP Importados">
-  <input class="search" id="searchInput" aria-label="Pesquisar produtos" placeholder="O que você está procurando?" autocomplete="off">
-  <a class="hotspot inicio" href="#inicio" aria-label="Início"></a>
-  <a class="hotspot produtos" href="#" onclick="openProducts();return false" aria-label="Produtos"></a>
-  <a class="hotspot categorias" href="#" onclick="openProducts();return false" aria-label="Categorias"></a>
-  <a class="hotspot sobre" href="#" onclick="openAbout();return false" aria-label="Sobre nós"></a>
-  <a class="hotspot contato" href="#" onclick="openContact();return false" aria-label="Contato"></a>
-  <a class="hotspot cart-hotspot" href="#" onclick="openCart();return false" aria-label="Carrinho"></a>
-  <a class="hotspot ver-produtos" href="#" onclick="openProducts();return false" aria-label="Ver produtos"></a>
-  <a class="hotspot tenis" href="#" onclick="openProducts('Tênis');return false" aria-label="Tênis"></a>
-  <a class="hotspot roupas" href="#" onclick="openProducts('Roupas');return false" aria-label="Roupas"></a>
-  <a class="hotspot relogios" href="#" onclick="openProducts('Relógios');return false" aria-label="Relógios"></a>
-  <a class="hotspot bolsas" href="#" onclick="openProducts('Bolsas');return false" aria-label="Bolsas"></a>
-  <a class="hotspot perfumes" href="#" onclick="openProducts('Perfumes');return false" aria-label="Perfumes"></a>
-  <a class="hotspot oculos" href="#" onclick="openProducts('Óculos');return false" aria-label="Óculos"></a>
-  <a class="hotspot eletronicos" href="#" onclick="openProducts('Eletrônicos');return false" aria-label="Eletrônicos"></a>
-  <div class="badge" id="cartBadge">0</div>
-</div>
-<div class="overlay" id="overlay" onclick="if(event.target===this) closeModal()" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal">
-    <div class="modal-head">
-      <h2 id="modalTitle">Produtos</h2>
-      <button class="close" onclick="closeModal()" aria-label="Fechar">×</button>
-    </div>
-    <div id="modalBody"></div>
-  </div>
-</div>
+<div class="topbar"><div class="container"><span>Atendimento rápido pelo WhatsApp</span><span>Pix • Mastercard • Visa</span></div></div>
+<header class="header"><div class="container nav"><a href="#inicio" class="brand"><div class="brand-mark">JP</div><span>JP IMPORTADOS</span></a><nav class="navlinks"><a href="#inicio">Início</a><a href="#categorias">Categorias</a><a href="#produtos">Produtos</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a></nav><div class="actions"><a class="iconbtn catalog-link" href="JP_Importados_Catalogo_Final_Completo.pdf" target="_blank" rel="noopener">Catálogo PDF</a><button class="iconbtn" onclick="openCart()" aria-label="Carrinho">🛒<span class="badge" id="cartBadge">0</span></button><button class="iconbtn menuBtn" onclick="toggleMenu()">☰</button></div></div><div class="container mobile-menu" id="mobileMenu"><a href="#inicio" onclick="toggleMenu()">Início</a><a href="#categorias" onclick="toggleMenu()">Categorias</a><a href="#produtos" onclick="toggleMenu()">Produtos</a><a href="#sobre" onclick="toggleMenu()">Sobre</a><a href="#contato" onclick="toggleMenu()">Contato</a></div></header>
+<main>
+<section class="hero" id="inicio"><div class="container hero-grid"><div><span class="eyebrow">✦ Produtos selecionados</span><h1>Estilo, qualidade e <span>confiança.</span></h1><p>Encontre produtos selecionados da JP Importados com atendimento rápido, catálogo completo e compra facilitada pelo WhatsApp.</p><div class="cta"><a class="btn btn-primary" href="#produtos">Ver produtos</a><a class="btn btn-dark" href="JP_Importados_Catalogo_Final_Completo.pdf" target="_blank" rel="noopener">Abrir catálogo</a></div></div><div class="hero-card"><div class="showcase"><div><span class="mini-label">Destaque JP</span><h3>Seleção premium</h3><p>Perfumes, relógios, óculos e outros produtos escolhidos para você.</p></div><div class="showcase-icon">✨</div><div><a class="btn btn-primary" href="#categorias">Explorar categorias</a></div></div></div></div></section>
+<section class="benefits"><div class="container benefit-grid"><div class="benefit"><b>Atendimento rápido</b><span>Contato direto pelo WhatsApp</span></div><div class="benefit"><b>Produtos selecionados</b><span>Curadoria de itens e novidades</span></div><div class="benefit"><b>Compra facilitada</b><span>Pedido simples e direto</span></div><div class="benefit"><b>Pagamento</b><span>Pix, Mastercard e Visa</span></div></div></section>
+<section class="section" id="categorias"><div class="container"><div class="section-head"><div><h2>Categorias</h2><p>Escolha uma categoria para filtrar a vitrine.</p></div></div><div class="categories"><div class="cat" onclick="setCategory('Relógios')"><div class="emoji">⌚</div><b>Relógios</b><span>Modelos selecionados</span></div><div class="cat" onclick="setCategory('Perfumes')"><div class="emoji">🧴</div><b>Perfumes</b><span>Fragrâncias marcantes</span></div><div class="cat" onclick="setCategory('Óculos')"><div class="emoji">🕶️</div><b>Óculos</b><span>Estilo para o dia a dia</span></div><div class="cat" onclick="showCatalogNote()"><div class="emoji">🛍️</div><b>Mais produtos</b><span>Veja o catálogo completo</span></div></div></div></section>
+<section class="section" id="produtos"><div class="container"><div class="section-head"><div><h2>Produtos em destaque</h2><p>Confira os itens disponíveis na vitrine.</p></div><a class="btn btn-dark" href="JP_Importados_Catalogo_Final_Completo.pdf" target="_blank" rel="noopener">Catálogo completo</a></div><div class="shopbar"><div class="searchbox">⌕<input id="searchInput" placeholder="Pesquisar produto..." oninput="renderProducts()"></div><div class="filters" id="filters"></div></div><div class="products" id="productsGrid"></div></div></section>
+<section class="section" id="sobre"><div class="container about"><div><span class="eyebrow">Sobre a loja</span><h2 style="font-size:40px;margin:18px 0 14px">JP Importados</h2><p style="color:#aaa;font-size:17px">A JP Importados trabalha com produtos selecionados, buscando oferecer qualidade, estilo e confiança em cada atendimento.</p><div class="about-list"><div class="about-item"><span class="check">✓</span><span>Atendimento direto para tirar dúvidas e confirmar disponibilidade.</span></div><div class="about-item"><span class="check">✓</span><span>Catálogo digital para facilitar a escolha dos produtos.</span></div><div class="about-item"><span class="check">✓</span><span>Pedido enviado pelo WhatsApp para confirmação de entrega e pagamento.</span></div></div></div><div class="about-card"><span class="mini-label">Nossa proposta</span><h3 style="font-size:28px;margin:10px 0">Comprar com praticidade</h3><p style="color:#9e9e9e">Escolha o produto no site, adicione ao carrinho e finalize pelo WhatsApp. A equipe confirma disponibilidade, entrega e forma de pagamento.</p><a class="btn btn-primary" href="https://wa.me/5511974979901" target="_blank" rel="noopener">Falar no WhatsApp</a></div></div></section>
+<section class="section" id="contato"><div class="container contact-grid"><div><div class="section-head"><div><h2>Fale com a JP Importados</h2><p>Entre em contato para confirmar disponibilidade, entrega e pagamento.</p></div></div><div class="contact-card"><div class="contact-lines"><div class="contact-line"><small>WhatsApp</small><b>11 97497-9901</b></div><div class="contact-line"><small>Endereço</small><b>Av. Sapopemba 14896, São Rafael</b></div><div class="contact-line"><small>CNPJ</small><b>32.574.183/0001-45</b></div><div class="contact-line"><small>Formas de pagamento</small><b>Pix, Mastercard e Visa</b></div></div></div></div><div class="contact-card"><span class="mini-label">Atendimento</span><h3 style="font-size:28px;margin:10px 0">Precisa de ajuda?</h3><p style="color:#999">Envie uma mensagem e receba atendimento direto da loja.</p><a class="btn btn-primary" style="width:100%" href="https://wa.me/5511974979901" target="_blank" rel="noopener">Chamar no WhatsApp</a><a class="btn btn-dark" style="width:100%;margin-top:10px" href="JP_Importados_Catalogo_Final_Completo.pdf" target="_blank" rel="noopener">Abrir catálogo PDF</a></div></div></section>
+</main>
+<footer class="footer"><div class="container footer-row"><span>© JP Importados</span><span>Atendimento • Qualidade • Confiança</span></div></footer>
+<button class="wa-float" onclick="window.open('https://wa.me/5511974979901','_blank')">WhatsApp</button>
+<div class="drawer-backdrop" id="cartBackdrop" onclick="if(event.target===this)closeCart()"><aside class="drawer"><div class="drawer-head"><div><small style="color:#888">Seu pedido</small><h2 style="margin:2px 0">Carrinho</h2></div><button class="close" onclick="closeCart()">×</button></div><div id="cartContent"></div></aside></div>
 <script>
 const WHATSAPP='5511974979901';
 const products=[
-  {id:'oculos',name:'Óculos de Sol',category:'Óculos',price:74.90,stock:6,emoji:'🕶️',detail:'Cores: azul, preto e vermelho'},
-  {id:'relogio-prata',name:'Relógio Prata',category:'Relógios',price:49.90,stock:1,emoji:'⌚',detail:'1 unidade disponível'},
-  {id:'invictus',name:'Invictus',category:'Perfumes',price:470.00,stock:2,emoji:'🧴',detail:'Perfume selecionado'},
-  {id:'one-million',name:'1 Million',category:'Perfumes',price:544.90,stock:1,emoji:'🧴',detail:'Perfume selecionado'},
-  {id:'relogio-dourado',name:'Relógio Dourado',category:'Relógios',price:1190.00,stock:1,emoji:'⌚',detail:'Modelo dourado'},
-  {id:'relogio-dourado-2',name:'Relógio Dourado 2',category:'Relógios',price:1140.00,stock:1,emoji:'⌚',detail:'Modelo dourado'}
+{id:'oculos',name:'Óculos de Sol',category:'Óculos',price:74.90,stock:6,emoji:'🕶️',detail:'Cores: azul, preto e vermelho'},
+{id:'relogio-prata',name:'Relógio Prata',category:'Relógios',price:49.90,stock:1,emoji:'⌚',detail:'Modelo prata • 1 unidade disponível'},
+{id:'invictus',name:'Invictus',category:'Perfumes',price:470.00,stock:2,emoji:'🧴',detail:'Perfume selecionado'},
+{id:'one-million',name:'1 Million',category:'Perfumes',price:544.90,stock:1,emoji:'🧴',detail:'Perfume selecionado'},
+{id:'relogio-dourado',name:'Relógio Dourado',category:'Relógios',price:1190.00,stock:1,emoji:'⌚',detail:'Modelo dourado'},
+{id:'relogio-dourado-2',name:'Relógio Dourado 2',category:'Relógios',price:1140.00,stock:1,emoji:'⌚',detail:'Modelo dourado'}
 ];
-const categories=['Todos','Tênis','Roupas','Relógios','Bolsas','Perfumes','Óculos','Eletrônicos'];
-let cart={};
-try{cart=JSON.parse(localStorage.getItem('jpCart')||'{}')||{}}catch(e){cart={}}
-function money(v){return Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+let activeCategory='Todos',cart={};try{cart=JSON.parse(localStorage.getItem('jpCart')||'{}')||{}}catch(e){cart={}}
+const money=v=>Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 function saveCart(){localStorage.setItem('jpCart',JSON.stringify(cart));updateBadge()}
-function updateBadge(){const n=Object.values(cart).reduce((a,b)=>a+Number(b||0),0);document.getElementById('cartBadge').textContent=n}
-function openModal(title,html){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=html;document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden'}
-function closeModal(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow=''}
-function openProducts(category='',search=''){
-  const toolbar=`<div class="toolbar">${categories.map(c=>`<button class="${(!category&&c==='Todos')||category===c?'active':''}" onclick="openProducts('${c==='Todos'?'':c}')">${c}</button>`).join('')}<a class="pdf-btn" href="JP_Importados_Catalogo_Final_Completo.pdf" target="_blank" rel="noopener">Abrir catálogo PDF</a></div>`;
-  const q=(search||'').trim().toLowerCase();
-  const list=products.filter(p=>(!category||p.category===category)&&(!q||p.name.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)||p.detail.toLowerCase().includes(q)));
-  const grid=`<div class="products-grid">${list.length?list.map(p=>`<div class="card"><div class="emoji">${p.emoji}</div><h3>${p.name}</h3><div>${p.detail}</div><div class="price">${money(p.price)}</div><div class="stock">${p.stock} unid. em estoque</div><div class="actions"><button onclick="addToCart('${p.id}')">Adicionar</button><button class="secondary" onclick="buyNow('${p.id}')">Comprar agora</button></div></div>`).join(''):`<div class="empty">Nenhum produto encontrado nesta categoria. Consulte o catálogo completo ou fale com a JP Importados pelo WhatsApp.</div>`}</div>`;
-  openModal(search?`Busca: ${search}`:(category||'Produtos'),toolbar+grid)
-}
-function addToCart(id){const p=products.find(x=>x.id===id);if(!p)return;const qty=Number(cart[id]||0);if(qty>=p.stock){alert('Quantidade máxima em estoque atingida.');return}cart[id]=qty+1;saveCart();openCart()}
-function removeOne(id){if(!cart[id])return;cart[id]--;if(cart[id]<=0)delete cart[id];saveCart();openCart()}
-function addOne(id){const p=products.find(x=>x.id===id);if(!p)return;if(Number(cart[id]||0)>=p.stock){alert('Quantidade máxima em estoque atingida.');return}cart[id]=Number(cart[id]||0)+1;saveCart();openCart()}
-function openCart(){
-  Object.keys(cart).forEach(id=>{if(!products.some(p=>p.id===id))delete cart[id]});saveCart();
-  const ids=Object.keys(cart);if(!ids.length){openModal('Carrinho','<div class="cart-panel"><p>Seu carrinho está vazio.</p><button class="checkout" onclick="openProducts()">Ver produtos</button></div>');return}
-  let total=0;const items=ids.map(id=>{const p=products.find(x=>x.id===id),q=Number(cart[id]),subtotal=p.price*q;total+=subtotal;return `<div class="cart-item"><div><b>${p.name}</b><br><small>${money(p.price)} cada</small></div><div class="qty"><button onclick="removeOne('${id}')">−</button><b>${q}</b><button onclick="addOne('${id}')">+</button></div><div><b>${money(subtotal)}</b></div></div>`}).join('');
-  openModal('Seu carrinho',`<div class="cart-panel">${items}<div class="cart-total"><span>Total</span><span>${money(total)}</span></div><button class="checkout" onclick="checkoutWhatsApp()">FINALIZAR PEDIDO PELO WHATSAPP</button><div class="note">O pedido será enviado para a JP Importados no WhatsApp para confirmação de disponibilidade, entrega e pagamento.</div></div>`)
-}
-function checkoutWhatsApp(){const ids=Object.keys(cart);if(!ids.length)return;let total=0,lines=['Olá! Quero fazer este pedido na JP Importados:',''];ids.forEach(id=>{const p=products.find(x=>x.id===id);if(!p)return;const q=Number(cart[id]),sub=p.price*q;total+=sub;lines.push(`• ${p.name} — ${q}x — ${money(sub)}`)});lines.push('',`Total: ${money(total)}`,'','Pode me confirmar disponibilidade, entrega e pagamento?');window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`,'_blank','noopener')}
-function buyNow(id){const p=products.find(x=>x.id===id);if(!p)return;const msg=`Olá! Tenho interesse em comprar:\n\n• ${p.name}\n• Valor: ${money(p.price)}\n\nPode me confirmar disponibilidade, entrega e pagamento?`;window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,'_blank','noopener')}
-function openAbout(){openModal('Sobre nós',`<div class="aboutbox"><h3>JP Importados</h3><p>A JP Importados trabalha com produtos selecionados, buscando oferecer qualidade, estilo e confiança.</p><p>Você pode consultar disponibilidade, catálogo e condições de compra diretamente pelo WhatsApp.</p><p><a class="pdf-btn" href="JP_Importados_Catalogo_Final_Completo.pdf" target="_blank" rel="noopener">ABRIR CATÁLOGO</a></p></div>`)}
-function openContact(){openModal('Contato',`<div class="contactbox"><h3>Fale com a JP Importados</h3><p><b>WhatsApp:</b> <a href="https://wa.me/${WHATSAPP}" target="_blank" rel="noopener">11 97497-9901</a></p><p><b>Instagram:</b> JP Importados</p><p><b>Endereço:</b> Av. Sapopemba 14896, São Rafael</p><p><b>CNPJ:</b> 32.574.183/0001-45</p><p><b>Formas de pagamento:</b> Pix, Mastercard e Visa</p><p><a class="pdf-btn" href="https://wa.me/${WHATSAPP}" target="_blank" rel="noopener">CHAMAR NO WHATSAPP</a></p></div>`)}
-document.getElementById('searchInput').addEventListener('keydown',function(e){if(e.key==='Enter'){const q=this.value.trim();if(q)openProducts('',q);else openProducts()}});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
-updateBadge();
+function updateBadge(){document.getElementById('cartBadge').textContent=Object.values(cart).reduce((a,b)=>a+Number(b||0),0)}
+function renderFilters(){const cats=['Todos','Relógios','Perfumes','Óculos'];document.getElementById('filters').innerHTML=cats.map(c=>`<button class="filter ${activeCategory===c?'active':''}" onclick="setCategory('${c}')">${c}</button>`).join('')}
+function setCategory(c){activeCategory=c;renderFilters();renderProducts();document.getElementById('produtos').scrollIntoView({behavior:'smooth'})}
+function renderProducts(){const q=document.getElementById('searchInput').value.trim().toLowerCase();const list=products.filter(p=>(activeCategory==='Todos'||p.category===activeCategory)&&(!q||p.name.toLowerCase().includes(q)||p.detail.toLowerCase().includes(q)||p.category.toLowerCase().includes(q)));document.getElementById('productsGrid').innerHTML=list.length?list.map(p=>`<article class="product"><div class="product-visual">${p.emoji}</div><div class="product-body"><div class="product-top"><h3>${p.name}</h3><span class="tag">${p.category}</span></div><div class="detail">${p.detail}</div><div class="stock">${p.stock} unid. em estoque</div><div class="price">${money(p.price)}</div><div class="product-actions"><button class="add" onclick="addToCart('${p.id}')">Adicionar</button><button class="buy" onclick="buyNow('${p.id}')">Comprar agora</button></div></div></article>`).join(''):'<div class="empty" style="grid-column:1/-1">Nenhum produto encontrado.</div>'}
+function addToCart(id){const p=products.find(x=>x.id===id);if(!p)return;const q=Number(cart[id]||0);if(q>=p.stock){alert('Quantidade máxima em estoque atingida.');return}cart[id]=q+1;saveCart();openCart()}
+function changeQty(id,delta){const p=products.find(x=>x.id===id);if(!p)return;const next=Number(cart[id]||0)+delta;if(next<=0)delete cart[id];else if(next<=p.stock)cart[id]=next;else{alert('Quantidade máxima em estoque atingida.');return}saveCart();renderCart()}
+function openCart(){renderCart();document.getElementById('cartBackdrop').classList.add('open');document.body.style.overflow='hidden'}
+function closeCart(){document.getElementById('cartBackdrop').classList.remove('open');document.body.style.overflow=''}
+function renderCart(){const ids=Object.keys(cart).filter(id=>products.some(p=>p.id===id));if(!ids.length){document.getElementById('cartContent').innerHTML='<div class="empty">Seu carrinho está vazio.</div>';return}let total=0;const items=ids.map(id=>{const p=products.find(x=>x.id===id),q=Number(cart[id]),sub=p.price*q;total+=sub;return `<div class="cart-item"><div><b>${p.name}</b><div style="color:#999;font-size:13px">${money(p.price)} cada</div><div class="qty"><button onclick="changeQty('${id}',-1)">−</button><b>${q}</b><button onclick="changeQty('${id}',1)">+</button></div></div><b>${money(sub)}</b></div>`}).join('');document.getElementById('cartContent').innerHTML=`<div class="cart-items">${items}</div><div class="cart-total"><span>Total</span><span>${money(total)}</span></div><button class="btn btn-primary" style="width:100%" onclick="checkoutWhatsApp()">Finalizar pelo WhatsApp</button><p style="color:#777;font-size:12px">O pedido será enviado para confirmação de disponibilidade, entrega e pagamento.</p>`}
+function checkoutWhatsApp(){const ids=Object.keys(cart);if(!ids.length)return;let total=0,lines=['Olá! Quero fazer este pedido na JP Importados:',''];ids.forEach(id=>{const p=products.find(x=>x.id===id);if(!p)return;const q=Number(cart[id]),sub=p.price*q;total+=sub;lines.push(`• ${p.name} — ${q}x — ${money(sub)}`)});lines.push('',`Total: ${money(total)}`,'','Pode me confirmar disponibilidade, entrega e pagamento?');window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`,'_blank')}
+function buyNow(id){const p=products.find(x=>x.id===id);if(!p)return;const msg=`Olá! Tenho interesse em comprar:\n\n• ${p.name}\n• Valor: ${money(p.price)}\n\nPode me confirmar disponibilidade, entrega e pagamento?`;window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,'_blank')}
+function showCatalogNote(){window.open('JP_Importados_Catalogo_Final_Completo.pdf','_blank')}
+function toggleMenu(){const m=document.getElementById('mobileMenu');m.style.display=m.style.display==='block'?'none':'block'}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCart()});renderFilters();renderProducts();updateBadge();
 </script>
 </body>
 </html>
