@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JP Importados</title>
+<style>
+html,body{margin:0;background:#000;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:#fff}
+*{box-sizing:border-box}
+button,input{font:inherit}
+.site{position:relative;width:100%;max-width:1536px;margin:0 auto;line-height:0}
+.site>img{display:block;width:100%;height:auto}
+.hotspot{position:absolute;display:block;z-index:5;cursor:pointer}
+.hotspot:hover{outline:1px solid rgba(255,190,70,.18)}
+/* áreas clicáveis sobre a arte */
+.inicio{left:30.0%;top:14.5%;width:5.2%;height:5.8%}
+.produtos{left:35.3%;top:14.5%;width:6.5%;height:5.8%}
+.categorias{left:42.1%;top:14.5%;width:8.4%;height:5.8%}
+.sobre{left:52.8%;top:14.5%;width:6.8%;height:5.8%}
+.contato{left:60.5%;top:14.5%;width:6.7%;height:5.8%}
+.cart-hotspot{left:91.8%;top:8.7%;width:5.0%;height:8.2%}
+.ver-produtos{left:15.0%;top:52.2%;width:16.3%;height:7.5%;border-radius:35px}
+.tenis{left:6.4%;top:83.0%;width:12.5%;height:13.5%}
+.roupas{left:19.7%;top:83.0%;width:12.5%;height:13.5%}
+.relogios{left:32.1%;top:83.0%;width:12.7%;height:13.5%}
+.bolsas{left:44.8%;top:83.0%;width:12.5%;height:13.5%}
+.perfumes{left:57.7%;top:83.0%;width:12.5%;height:13.5%}
+.oculos{left:70.5%;top:83.0%;width:12.5%;height:13.5%}
+.eletronicos{left:83.0%;top:83.0%;width:11.5%;height:13.5%}
+.search{
+ position:absolute;z-index:6;left:29.2%;top:9.1%;width:40.5%;height:4.8%;
+ background:transparent;border:0;outline:0;color:#fff;padding:0 4%;
+ font-size:14px;line-height:normal;
+}
+.search::placeholder{color:transparent}
+.badge{
+ position:absolute;z-index:7;right:3.7%;top:8.1%;
+ min-width:20px;height:20px;padding:0 5px;border-radius:999px;
+ background:#dca33b;color:#050505;font-weight:800;font-size:11px;
+ display:flex;align-items:center;justify-content:center;line-height:20px;
+ pointer-events:none;
+}
+/* Modal */
+.overlay{
+ position:fixed;inset:0;background:rgba(0,0,0,.84);z-index:1000;
+ display:none;align-items:center;justify-content:center;padding:22px;
+}
+.overlay.open{display:flex}
+.modal{
+ width:min(1100px,96vw);max-height:90vh;overflow:auto;
+ background:#080808;border:1px solid #b8791d;border-radius:16px;
+ box-shadow:0 20px 80px rgba(0,0,0,.6);line-height:1.35;
+}
+.modal-head{
+ position:sticky;top:0;z-index:2;background:#080808;
+ display:flex;align-items:center;justify-content:space-between;
+ padding:18px 20px;border-bottom:1px solid #35220d;
+}
+.modal-head h2{margin:0;color:#efbd5a;font-size:22px}
+.close{
+ border:1px solid #7a4d17;background:#111;color:#fff;border-radius:50%;
+ width:36px;height:36px;cursor:pointer;font-size:20px
+}
+.toolbar{
+ display:flex;gap:10px;flex-wrap:wrap;padding:14px 20px;border-bottom:1px solid #24170a
+}
+.toolbar button,.pdf-btn{
+ background:#111;color:#efbd5a;border:1px solid #80511b;
+ padding:10px 14px;border-radius:999px;cursor:pointer
+}
+.toolbar button.active{background:#dca33b;color:#050505}
+.products-grid{
+ display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:20px
+}
+.card{
+ background:#0d0d0d;border:1px solid #2d2114;border-radius:14px;padding:16px;
+ display:flex;flex-direction:column;gap:10px
+}
+.card .emoji{font-size:44px;line-height:1}
+.card h3{margin:0;color:#fff;font-size:17px}
+.card .price{color:#efbd5a;font-size:20px;font-weight:800}
+.card .stock{font-size:12px;color:#aaa}
+.card .actions{display:flex;gap:8px;margin-top:auto}
+.card button{
+ flex:1;border:1px solid #b77a22;background:#dca33b;color:#080808;
+ padding:10px 12px;border-radius:8px;font-weight:800;cursor:pointer
+}
+.card button.secondary{background:#111;color:#efbd5a}
+.cart-panel{padding:18px 20px}
+.cart-item{
+ display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;
+ border-bottom:1px solid #2a1d0f;padding:12px 0
+}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{
+ width:28px;height:28px;border:1px solid #7f541f;background:#111;color:#efbd5a;border-radius:6px;cursor:pointer
+}
+.cart-total{
+ display:flex;justify-content:space-between;align-items:center;
+ font-size:20px;font-weight:800;color:#efbd5a;padding:18px 0
+}
+.checkout{
+ width:100%;border:0;background:#25D366;color:#071b0d;font-weight:900;
+ padding:14px;border-radius:10px;cursor:pointer;font-size:16px
+}
+.note{color:#aaa;font-size:12px;margin-top:10px}
+.aboutbox,.contactbox{padding:26px 22px;color:#ddd}
+.aboutbox h3,.contactbox h3{color:#efbd5a;margin-top:0}
+.contactbox a{color:#efbd5a}
+@media(max-width:850px){
+ .products-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+ .products-grid{grid-template-columns:1fr}
+ .site{min-width:900px}
+ body{overflow-x:auto}
+ .overlay{align-items:flex-start;padding:8px}
+ .modal{max-height:96vh}
+}
+</style>
+</head>
+<body>
+<div class="site" id="inicio">
+  <img src="site-reference.jpeg" alt="JP Importados">
+
+  <input class="search" id="searchInput" aria-label="Pesquisar produtos" placeholder="O que você está procurando?">
+
+  <a class="hotspot inicio" href="#inicio" aria-label="Início"></a>
+  <a class="hotspot produtos" href="#" onclick="openProducts();return false" aria-label="Produtos"></a>
+  <a class="hotspot categorias" href="#" onclick="openProducts();return false" aria-label="Categorias"></a>
+  <a class="hotspot sobre" href="#" onclick="openAbout();return false" aria-label="Sobre nós"></a>
+  <a class="hotspot contato" href="#" onclick="openContact();return false" aria-label="Contato"></a>
+  <a class="hotspot cart-hotspot" href="#" onclick="openCart();return false" aria-label="Carrinho"></a>
+
+  <a class="hotspot ver-produtos" href="#" onclick="openProducts();return false" aria-label="Ver produtos"></a>
+
+  <a class="hotspot tenis" href="#" onclick="openProducts('Tênis');return false" aria-label="Tênis"></a>
+  <a class="hotspot roupas" href="#" onclick="openProducts('Roupas');return false" aria-label="Roupas"></a>
+  <a class="hotspot relogios" href="#" onclick="openProducts('Relógios');return false" aria-label="Relógios"></a>
+  <a class="hotspot bolsas" href="#" onclick="openProducts('Bolsas');return false" aria-label="Bolsas"></a>
+  <a class="hotspot perfumes" href="#" onclick="openProducts('Perfumes');return false" aria-label="Perfumes"></a>
+  <a class="hotspot oculos" href="#" onclick="openProducts('Óculos');return false" aria-label="Óculos"></a>
+  <a class="hotspot eletronicos" href="#" onclick="openProducts('Eletrônicos');return false" aria-label="Eletrônicos"></a>
+
+  <div class="badge" id="cartBadge">0</div>
+</div>
+
+<div class="overlay" id="overlay" onclick="if(event.target===this) closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="modalTitle">Produtos</h2>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+const WHATSAPP = '5511974979901';
+
+const products = [
+  {id:'oculos', name:'Óculos de Sol', category:'Óculos', price:74.90, stock:6, emoji:'🕶️', detail:'Cores: azul, preto e vermelho'},
+  {id:'relogio-prata', name:'Relógio Prata', category:'Relógios', price:49.90, stock:1, emoji:'⌚', detail:'1 unidade disponível'},
+  {id:'invictus', name:'Invictus', category:'Perfumes', price:470.00, stock:2, emoji:'🧴', detail:'Perfume selecionado'},
+  {id:'one-million', name:'1 Million', category:'Perfumes', price:544.90, stock:1, emoji:'🧴', detail:'Perfume selecionado'},
+  {id:'relogio-dourado', name:'Relógio Dourado', category:'Relógios', price:1190.00, stock:1, emoji:'⌚', detail:'Modelo dourado'},
+  {id:'relogio-dourado-2', name:'Relógio Dourado 2', category:'Relógios', price:1140.00, stock:1, emoji:'⌚', detail:'Modelo dourado'}
+];
+
+let cart = JSON.parse(localStorage.getItem('jpCart') || '{}');
+
+function money(v){return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}
+function saveCart(){localStorage.setItem('jpCart',JSON.stringify(cart));updateBadge()}
+function updateBadge(){
+  const n=Object.values(cart).reduce((a,b)=>a+b,0);
+  document.getElementById('cartBadge').textContent=n;
+}
+function openModal(title,html){
+  document.getElementById('modalTitle').textContent=title;
+  document.getElementById('modalBody').innerHTML=html;
+  document.getElementById('overlay').classList.add('open');
+}
+function closeModal(){document.getElementById('overlay').classList.remove('open')}
+
+function openProducts(category='', search=''){
+  const cats=['Todos','Relógios','Perfumes','Óculos'];
+  const toolbar = `<div class="toolbar">
+    ${cats.map(c=>`<button class="${(!category&&c==='Todos')||category===c?'active':''}" onclick="openProducts('${c==='Todos'?'':c}')">${c}</button>`).join('')}
+    <a class="pdf-btn" href="JP_Importados_Catalogo_Final_Completo.pdf" target="_blank">Abrir catálogo PDF</a>
+  </div>`;
+  let list=products.filter(p=>(!category||p.category===category) && (!search||p.name.toLowerCase().includes(search.toLowerCase())||p.category.toLowerCase().includes(search.toLowerCase())));
+  const grid=`<div class="products-grid">${
+    list.length?list.map(p=>`<div class="card">
+      <div class="emoji">${p.emoji}</div>
+      <h3>${p.name}</h3>
+      <div>${p.detail}</div>
+      <div class="price">${money(p.price)}</div>
+      <div class="stock">${p.stock} unid. em estoque</div>
+      <div class="actions">
+        <button onclick="addToCart('${p.id}')">Adicionar</button>
+        <button class="secondary" onclick="buyNow('${p.id}')">Comprar agora</button>
+      </div>
+    </div>`).join(''):'<div style="padding:25px;color:#aaa">Nenhum produto encontrado.</div>'
+  }</div>`;
+  openModal(category||'Produtos',toolbar+grid);
+}
+
+function addToCart(id){
+  const p=products.find(x=>x.id===id);
+  const qty=cart[id]||0;
+  if(qty>=p.stock){alert('Quantidade máxima em estoque atingida.');return}
+  cart[id]=qty+1;saveCart();openCart();
+}
+function removeOne(id){
+  if(!cart[id]) return;
+  cart[id]--;
+  if(cart[id]<=0) delete cart[id];
+  saveCart();openCart();
+}
+function addOne(id){
+  const p=products.find(x=>x.id===id);
+  if((cart[id]||0)>=p.stock){alert('Quantidade máxima em estoque atingida.');return}
+  cart[id]=(cart[id]||0)+1;saveCart();openCart();
+}
+function openCart(){
+  const ids=Object.keys(cart);
+  if(!ids.length){
+    openModal('Carrinho','<div class="cart-panel"><p>Seu carrinho está vazio.</p><button class="checkout" onclick="openProducts()">Ver produtos</button></div>');
+    return;
+  }
+  let total=0;
+  let items=ids.map(id=>{
+    const p=products.find(x=>x.id===id), q=cart[id], subtotal=p.price*q; total+=subtotal;
+    return `<div class="cart-item">
+      <div><b>${p.name}</b><br><small>${money(p.price)} cada</small></div>
+      <div class="qty"><button onclick="removeOne('${id}')">−</button><b>${q}</b><button onclick="addOne('${id}')">+</button></div>
+      <div><b>${money(subtotal)}</b></div>
+    </div>`;
+  }).join('');
+  const html=`<div class="cart-panel">${items}
+    <div class="cart-total"><span>Total</span><span>${money(total)}</span></div>
+    <button class="checkout" onclick="checkoutWhatsApp()">FINALIZAR PEDIDO PELO WHATSAPP</button>
+    <div class="note">O pedido será enviado para a JP Importados no WhatsApp para confirmação de disponibilidade, entrega e pagamento.</div>
+  </div>`;
+  openModal('Seu carrinho',html);
+}
+function checkoutWhatsApp(){
+  const ids=Object.keys(cart);
+  if(!ids.length)return;
+  let total=0, lines=['Olá! Quero fazer este pedido na JP Importados:',''];
+  ids.forEach(id=>{
+    const p=products.find(x=>x.id===id), q=cart[id], sub=p.price*q; total+=sub;
+    lines.push(`• ${p.name} — ${q}x — ${money(sub)}`);
+  });
+  lines.push('',`Total: ${money(total)}`,'','Pode me confirmar disponibilidade, entrega e pagamento?');
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`,'_blank');
+}
+function buyNow(id){
+  const p=products.find(x=>x.id===id);
+  const msg=`Olá! Tenho interesse em comprar:\n\n• ${p.name}\n• Valor: ${money(p.price)}\n\nPode me confirmar disponibilidade, entrega e pagamento?`;
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+function openAbout(){
+  openModal('Sobre nós',`<div class="aboutbox">
+    <h3>JP Importados</h3>
+    <p>A JP Importados trabalha com produtos selecionados, buscando oferecer qualidade, estilo e confiança.</p>
+    <p>Você pode consultar disponibilidade, catálogo e condições de compra diretamente pelo WhatsApp.</p>
+    <p><a class="pdf-btn" href="JP_Importados_Catalogo_Final_Completo.pdf" target="_blank">ABRIR CATÁLOGO</a></p>
+  </div>`);
+}
+function openContact(){
+  openModal('Contato',`<div class="contactbox">
+    <h3>Fale com a JP Importados</h3>
+    <p><b>WhatsApp:</b> <a href="https://wa.me/${WHATSAPP}" target="_blank">11 97497-9901</a></p>
+    <p><b>Instagram:</b> JP Importados</p>
+    <p><b>Endereço:</b> Av. Sapopemba 14896, São Rafael</p>
+    <p><b>CNPJ:</b> 32.574.183/0001-45</p>
+    <p><b>Formas de pagamento:</b> Pix, Mastercard e Visa</p>
+    <p><a class="pdf-btn" href="https://wa.me/${WHATSAPP}" target="_blank">CHAMAR NO WHATSAPP</a></p>
+  </div>`);
+}
+
+document.getElementById('searchInput').addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    const q=this.value.trim();
+    openProducts('',q);
+  }
+});
+updateBadge();
+</script>
+</body>
+</html>
