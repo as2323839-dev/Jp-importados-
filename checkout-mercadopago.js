@@ -7,6 +7,6 @@
     document.head.appendChild(s);
   }
   loadScript('/checkout-core.js?v=20260917-pixfix1',function(){
-    loadScript('/mobile-fix.js?v=20260917i');
+    loadScript('/mobile-fix.js?v=20260917j');
   });
 })();
