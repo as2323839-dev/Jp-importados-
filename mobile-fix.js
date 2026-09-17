@@ -26,8 +26,8 @@
       .jp-mobile-searchwrap button{width:52px;border:0;background:#e3a735;color:#080808;font-size:18px;font-weight:900}
       .jp-mobile-nav{display:grid!important;grid-template-columns:repeat(4,1fr)!important;width:100%!important;position:static!important;margin:0!important;padding:0!important;gap:0!important;border:0!important;border-bottom:1px solid #5c3b1a!important;border-radius:0!important;background:#050505!important;box-shadow:none!important}
       .jp-mobile-nav button{border:0;background:transparent;color:#fff;padding:12px 2px;font-size:10px;font-weight:800}
-      .jp-mobile-hero{position:relative;width:100%;min-height:430px;background:url('site-reference.jpeg?v=mobile-hero-2') center 36%/auto 100% no-repeat #000;border-bottom:1px solid #5c3b1a;display:flex;align-items:flex-end;justify-content:center;padding:22px 14px}
-      .jp-mobile-hero:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.22) 45%,rgba(0,0,0,.8) 100%)}
+      .jp-mobile-hero{position:relative;width:100%;min-height:360px;background:url('site-reference.jpeg?v=mobile-hero-3') center 52%/220% auto no-repeat #000;border-bottom:1px solid #5c3b1a;display:flex;align-items:flex-end;justify-content:center;padding:20px 14px}
+      .jp-mobile-hero:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.18) 58%,rgba(0,0,0,.78) 100%)}
       .jp-mobile-hero-card{position:relative;z-index:1;width:100%;max-width:390px;text-align:center;padding:14px;background:rgba(0,0,0,.72);border:1px solid #8a5b20;border-radius:14px}
       .jp-mobile-hero-card h1{margin:0;color:#efbd5a;font-family:Georgia,serif;font-size:27px;letter-spacing:.6px}
       .jp-mobile-hero-card p{margin:6px 0 12px;color:#e3d0a8;font-size:12px}
