@@ -1,64 +1,12 @@
 (function(){
-  function field(id){const el=document.getElementById('co-'+id);return el?el.value.trim():''}
-  function items(){return Object.keys(cart).map(id=>({id,quantity:Number(cart[id]||0)}))}
-  function basePayload(){return {items:items(),payer:{name:field('nome'),cpf:field('cpf'),email:field('email'),phone:field('telefone')},delivery:{cep:field('cep'),street:field('rua'),number:field('numero'),complement:field('complemento'),neighborhood:field('bairro'),city:field('cidade'),state:field('estado')}}}
-  function paymentData(order){const payments=order&&order.transactions&&order.transactions.payments;const p=Array.isArray(payments)?payments[0]:null;const pm=p&&p.payment_method||{};return {orderId:order&&order.id,externalRef:order&&order.external_reference,status:(p&&p.status)||(order&&order.status),detail:(p&&p.status_detail)||(order&&order.status_detail),qr:pm.qr_code||'',qrBase64:pm.qr_code_base64||'',ticket:pm.ticket_url||''}}
-  function mpError(data,fallback){const m=data&&data.mercado_pago;return (m&&(m.message||m.error))||(data&&data.error)||fallback}
-  function loadScript(src,test){return new Promise((resolve,reject)=>{const found=[...document.scripts].find(s=>test(s.src));if(found){if(test(found.src)&&window.MercadoPago&&src.includes('mercadopago'))return resolve();if(window.QRCode&&src.includes('qrcode'))return resolve()}const s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=()=>reject(new Error('Não foi possível carregar o recurso de pagamento.'));document.head.appendChild(s)})}
-  async function ensureMp(){if(window.MercadoPago)return;await loadScript('https://sdk.mercadopago.com/js/v2',u=>u.includes('sdk.mercadopago.com/js/v2'))}
-  async function ensureQr(){if(window.QRCode)return true;try{await loadScript('https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js',u=>u.includes('qrcodejs'));return !!window.QRCode}catch(e){return false}}
-  function approved(info){return ['processed','approved','accredited'].includes(String(info.status||'').toLowerCase())||String(info.detail||'').toLowerCase()==='accredited'}
-  function completeSale(info,box){cart={};saveCart();if(box)box.innerHTML='<b>Pagamento aprovado ✓</b><br>Seu pagamento foi confirmado pelo Mercado Pago.<br><small>Pedido: '+(info.externalRef||info.orderId||'confirmado')+'</small><br><button class="continue" type="button" onclick="openProducts()">CONTINUAR COMPRANDO</button>'}
-  window.copyPixCode=async function(){const el=document.getElementById('pixCode');if(!el)return;try{await navigator.clipboard.writeText(el.value);const b=document.getElementById('copyPixBtn');if(b)b.textContent='COPIADO ✓'}catch(e){el.select();document.execCommand('copy')}};
-  async function pollOrder(orderId){if(!orderId)return;let attempts=0;const timer=setInterval(async()=>{if(++attempts>60){clearInterval(timer);return}try{const r=await fetch('/api/order-status?id='+encodeURIComponent(orderId));const data=await r.json();const info=paymentData(data);const box=document.getElementById('mpStatus');if(!box)return clearInterval(timer);if(approved(info)){clearInterval(timer);completeSale(info,box)}}catch(e){}},3000)}
-  async function renderPixQr(info){const box=document.getElementById('pixQrBox');if(!box||!info.qr)return;if(info.qrBase64){box.innerHTML='<img src="data:image/png;base64,'+info.qrBase64+'" alt="QR Code Pix" style="display:block;width:min(260px,100%);margin:12px auto;background:#fff;padding:10px;border-radius:12px">';return}const ok=await ensureQr();if(ok&&window.QRCode){box.innerHTML='';new QRCode(box,{text:info.qr,width:230,height:230,correctLevel:QRCode.CorrectLevel.M});const img=box.querySelector('img,canvas');if(img){img.style.display='block';img.style.margin='12px auto';img.style.background='#fff';img.style.padding='10px';img.style.borderRadius='12px'}}else{box.innerHTML='<p style="color:#efbd5a">Use o Pix Copia e Cola abaixo.</p>'}}
-  window.submitCheckout=async function(){if(payment!=='Pix')return;if(!validateCheckout())return;const status=document.getElementById('mpStatus'),btn=document.getElementById('payNowBtn'),err=document.getElementById('checkoutError');if(btn){btn.disabled=true;btn.textContent='GERANDO PIX...'}if(status)status.innerHTML='Conectando com o Mercado Pago...';if(err)err.style.display='none';try{const r=await fetch('/api/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...basePayload(),method:'pix'})});const data=await r.json();if(!r.ok)throw new Error(mpError(data,'Não foi possível gerar o Pix.'));const info=paymentData(data);if(approved(info)){completeSale(info,status);return}if(!info.qr&&!info.ticket)throw new Error('O Mercado Pago criou a cobrança, mas não retornou os dados do Pix.');const copy=info.qr?'<label style="display:block;font-size:12px;margin:10px 0 6px">Pix Copia e Cola</label><textarea id="pixCode" readonly style="width:100%;min-height:92px;background:#080808;color:#fff;border:1px solid #80511b;border-radius:8px;padding:10px">'+info.qr+'</textarea><button id="copyPixBtn" class="continue" type="button" onclick="copyPixCode()">COPIAR CÓDIGO PIX</button>':'';const ticket=info.ticket?'<a href="'+info.ticket+'" target="_blank" rel="noopener" style="display:block;text-align:center;margin-top:10px;color:#efbd5a">Abrir instruções do Mercado Pago</a>':'';if(status)status.innerHTML='<b>Pix gerado com sucesso.</b><div id="pixQrBox"></div>'+copy+ticket+'<p style="margin-top:10px">Status: <b>'+(info.detail||info.status||'aguardando pagamento')+'</b></p><p style="font-size:12px">Pedido: '+(info.externalRef||info.orderId||'')+'</p>';await renderPixQr(info);if(btn){btn.textContent='PIX GERADO';btn.disabled=true}pollOrder(info.orderId)}catch(e){if(status)status.innerHTML='<b>Não foi possível gerar o Pix.</b>';if(err){err.style.display='block';err.textContent=String(e&&e.message||e)}if(btn){btn.disabled=false;btn.textContent='TENTAR GERAR PIX NOVAMENTE'}}};
-  const originalOpenCheckout=window.openCheckout;
-  window.openCheckout=function(keep=false){originalOpenCheckout(keep);setTimeout(()=>{if(payment==='Cartão')setupCardCheckout()},0)};
-  async function setupCardCheckout(){const status=document.getElementById('mpStatus'),btn=document.getElementById('payNowBtn');if(!status)return;if(btn)btn.style.display='none';status.innerHTML='<b>Cartão de crédito</b><div id="cardSetup" style="margin-top:12px">Carregando formulário seguro do Mercado Pago...</div>';try{const cfgRes=await fetch('/api/config');const cfg=await cfgRes.json();if(!cfgRes.ok||!cfg.configured||!cfg.publicKey)throw new Error('Credenciais do Mercado Pago não estão disponíveis.');await ensureMp();const sum=checkoutItems();const setup=document.getElementById('cardSetup');if(!setup)return;setup.innerHTML='<form id="form-checkout" style="display:grid;gap:10px"><label>Número do cartão<div id="form-checkout__cardNumber" style="height:42px;background:#fff;border-radius:8px;padding:10px"></div></label><label>Validade<div id="form-checkout__expirationDate" style="height:42px;background:#fff;border-radius:8px;padding:10px"></div></label><label>Código de segurança<div id="form-checkout__securityCode" style="height:42px;background:#fff;border-radius:8px;padding:10px"></div></label><input id="form-checkout__cardholderName" placeholder="Nome no cartão" style="padding:12px;border-radius:8px;border:1px solid #5c3d19;background:#090909;color:#fff"><select id="form-checkout__issuer" style="padding:12px;border-radius:8px;border:1px solid #5c3d19;background:#090909;color:#fff"></select><select id="form-checkout__installments" style="padding:12px;border-radius:8px;border:1px solid #5c3d19;background:#090909;color:#fff"></select><select id="form-checkout__identificationType" style="padding:12px;border-radius:8px;border:1px solid #5c3d19;background:#090909;color:#fff"></select><input id="form-checkout__identificationNumber" placeholder="CPF" value="'+field('cpf').replace(/\D/g,'')+'" style="padding:12px;border-radius:8px;border:1px solid #5c3d19;background:#090909;color:#fff"><input id="form-checkout__cardholderEmail" type="email" placeholder="E-mail" value="'+field('email').replace(/"/g,'&quot;')+'" style="padding:12px;border-radius:8px;border:1px solid #5c3d19;background:#090909;color:#fff"><button id="form-checkout__submit" class="pay-now" type="submit">PAGAR COM CARTÃO</button><progress id="card-progress" value="0" style="width:100%;display:none"></progress><div id="cardMessage" style="font-size:13px"></div></form>';const mp=new MercadoPago(cfg.publicKey,{locale:'pt-BR'});const cardForm=mp.cardForm({amount:String(sum.total.toFixed(2)),iframe:true,form:{id:'form-checkout',cardNumber:{id:'form-checkout__cardNumber',placeholder:'Número do cartão'},expirationDate:{id:'form-checkout__expirationDate',placeholder:'MM/AA'},securityCode:{id:'form-checkout__securityCode',placeholder:'CVV'},cardholderName:{id:'form-checkout__cardholderName',placeholder:'Nome no cartão'},issuer:{id:'form-checkout__issuer',placeholder:'Banco emissor'},installments:{id:'form-checkout__installments',placeholder:'Parcelas'},identificationType:{id:'form-checkout__identificationType',placeholder:'Tipo de documento'},identificationNumber:{id:'form-checkout__identificationNumber',placeholder:'Documento'},cardholderEmail:{id:'form-checkout__cardholderEmail',placeholder:'E-mail'}},callbacks:{onFormMounted:error=>{if(error){const m=document.getElementById('cardMessage');if(m)m.textContent='Não foi possível carregar o formulário de cartão.'}},onSubmit:async event=>{event.preventDefault();if(!validateCheckout())return;const submit=document.getElementById('form-checkout__submit'),msg=document.getElementById('cardMessage');if(submit){submit.disabled=true;submit.textContent='PROCESSANDO...'}try{const d=cardForm.getCardFormData();const base=basePayload();const r=await fetch('/api/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({...base,method:'card',payer:{...base.payer,email:d.cardholderEmail||field('email'),cpf:d.identificationNumber||field('cpf')},card:{token:d.token,payment_method_id:d.paymentMethodId,installments:Number(d.installments)||1,issuer_id:d.issuerId}})});const data=await r.json();if(!r.ok)throw new Error(mpError(data,'Pagamento não aprovado.'));const info=paymentData(data);if(approved(info)){if(submit){submit.textContent='PAGAMENTO APROVADO';submit.disabled=true}completeSale(info,status);return}if(msg)msg.innerHTML='<b>Pagamento enviado ao Mercado Pago.</b><br>Status: '+(info.detail||info.status||'processando')+'<br>Pedido: '+(info.externalRef||info.orderId||'');if(submit){submit.textContent='PAGAMENTO ENVIADO';submit.disabled=true}if(info.orderId)pollOrder(info.orderId)}catch(e){if(msg)msg.textContent=String(e&&e.message||e);if(submit){submit.disabled=false;submit.textContent='TENTAR NOVAMENTE'}}},onFetching:()=>{const p=document.getElementById('card-progress');if(p){p.style.display='block';p.removeAttribute('value')}return()=>{if(p){p.style.display='none';p.setAttribute('value','0')}}}}})}catch(e){const setup=document.getElementById('cardSetup');if(setup)setup.innerHTML='<span style="color:#ffb0a7">'+String(e&&e.message||e)+'</span>'}}
-})();
-
-(function(){
-  function installMobileHomeFix(){
-    const style=document.createElement('style');
-    style.textContent=`
-      @media (max-width:600px){
-        html,body{min-height:100%;background:#000}
-        body{overflow-x:hidden}
-        .site{width:118vw;max-width:none;margin-left:-9vw;margin-right:-9vw}
-        .site>img{width:100%;height:auto}
-        .search{font-size:12px}
-        .hotspot{min-height:24px}
-        .account-actions{left:84.4%;top:9.5%;width:14.2%;height:10.6%}
-        .mobile-home-fill{display:block;margin:-1px auto 0;max-width:560px;padding:18px 16px 28px;background:linear-gradient(180deg,#070707 0%,#000 100%);border-top:1px solid #4a3014;color:#fff;text-align:center;line-height:1.35}
-        .mobile-home-fill h2{margin:0 0 6px;color:#efbd5a;font-size:20px}
-        .mobile-home-fill p{margin:0 0 14px;color:#c8b58d;font-size:13px}
-        .mobile-home-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-        .mobile-home-actions button,.mobile-home-actions a{display:flex;align-items:center;justify-content:center;min-height:46px;border-radius:10px;border:1px solid #8a5b20;background:#111;color:#efbd5a;font-weight:800;text-decoration:none;font-size:13px;padding:10px}
-        .mobile-home-actions .primary{background:#dca33b;color:#080808}
-        .mobile-home-actions .full{grid-column:1/-1}
-        .overlay{padding:6px;align-items:flex-start}
-        .modal{width:100%;max-height:96dvh;border-radius:12px}
-        .modal-head{padding:14px 16px}
-        .modal-head h2{font-size:19px}
-        .products-grid{grid-template-columns:1fr;padding:10px}
-        .card img{height:250px;object-fit:contain}
-        .checkout-shell{padding:10px;gap:10px}
-        .checkout-box{padding:14px}
-      }
-      @media (min-width:601px){.mobile-home-fill{display:none}}
-    `;
-    document.head.appendChild(style);
-
-    if(window.innerWidth<=600&&!document.querySelector('.mobile-home-fill')){
-      const site=document.querySelector('.site');
-      if(site){
-        const block=document.createElement('section');
-        block.className='mobile-home-fill';
-        block.innerHTML='<h2>JP Importados</h2><p>Escolha seus produtos e compre pelo celular com facilidade.</p><div class="mobile-home-actions"><button class="primary" type="button" onclick="openProducts()">VER PRODUTOS</button><button type="button" onclick="openCart()">CARRINHO</button><button type="button" onclick="openFavorites()">FAVORITOS</button><a href="https://wa.me/5511974979901" target="_blank" rel="noopener">WHATSAPP</a><button class="full" type="button" onclick="openAbout()">SOBRE A JP IMPORTADOS</button></div>';
-        site.insertAdjacentElement('afterend',block);
-      }
-    }
+  function loadScript(src,onload){
+    const s=document.createElement('script');
+    s.src=src;
+    s.onload=onload||null;
+    s.onerror=function(){console.error('Não foi possível carregar '+src)};
+    document.head.appendChild(s);
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',installMobileHomeFix);else installMobileHomeFix();
+  loadScript('/checkout-core.js?v=20260917',function(){
+    loadScript('/mobile-fix.js?v=20260917');
+  });
 })();
