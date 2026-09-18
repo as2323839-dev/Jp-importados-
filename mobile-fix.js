@@ -7,47 +7,65 @@
       html,body{margin:0!important;width:100%!important;min-height:100%!important;background:#000!important;color:#fff!important;overflow-x:hidden!important;font-family:Arial,Helvetica,sans-serif!important}
       body{min-height:100dvh!important}
       .site{display:none!important}
-      .jp-mobile-site{display:block!important;width:100%!important;max-width:none!important;min-height:100dvh!important;margin:0!important;padding:0 0 max(18px,env(safe-area-inset-bottom))!important;background:#000!important;color:#fff!important;line-height:1.3!important;overflow-x:hidden!important}
-      .jp-mobile-top{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#3b2814;border-bottom:1px solid #6d471f}
-      .jp-mobile-top div{background:#070707;padding:10px 5px;text-align:center;color:#d8c79f;font-size:9px;line-height:1.25}
-      .jp-mobile-top b{display:block;color:#efbd5a;font-size:9px;margin-bottom:2px}
-      .jp-mobile-head{padding:16px max(16px,env(safe-area-inset-left)) 14px max(16px,env(safe-area-inset-right));background:#050505;border-bottom:1px solid #5c3b1a}
-      .jp-mobile-brandrow{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:14px}
-      .jp-mobile-brand{display:flex;align-items:center;justify-content:center;gap:10px;min-width:0}
-      .jp-mobile-mark{font-family:Georgia,serif;font-size:44px;font-weight:900;line-height:.9;color:#efbd5a}
-      .jp-mobile-brandtext strong{display:block;font-family:Georgia,serif;color:#efbd5a;font-size:20px;letter-spacing:1px}
-      .jp-mobile-brandtext small{display:block;color:#b7a076;font-size:8px;letter-spacing:.8px;margin-top:3px}
-      .jp-mobile-icons{display:flex;align-items:center;justify-content:center;gap:14px}
-      .jp-mobile-icon{position:relative;width:44px;height:44px;min-width:44px;min-height:44px;border:1px solid #3f2a12;background:#090909;color:#fff;display:grid;place-items:center;padding:0;border-radius:50%;touch-action:manipulation}
-      .jp-mobile-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-      .jp-mobile-badge{position:absolute;right:-2px;top:-3px;min-width:18px;height:18px;padding:0 4px;border-radius:999px;background:#e7a934;color:#080808;font-size:10px;font-weight:900;display:grid;place-items:center}
-      .jp-mobile-searchwrap{display:flex;width:100%;height:50px;margin-top:14px;border:1px solid #9b6724;border-radius:999px;overflow:hidden;background:#0d0d0d}
-      .jp-mobile-searchwrap input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;padding:0 18px;font-size:16px}
-      .jp-mobile-searchwrap button{width:52px;border:0;background:#e3a735;color:#080808;font-size:18px;font-weight:900}
-      .jp-mobile-nav{display:grid!important;grid-template-columns:1fr!important;width:100%!important;position:static!important;margin:0!important;padding:12px 16px!important;gap:12px!important;border:0!important;border-bottom:1px solid #5c3b1a!important;border-radius:0!important;background:#050505!important;box-shadow:none!important}
-      .jp-mobile-nav button{min-height:58px;border:1px solid #5f3d19;background:#0b0b0b;color:#fff;padding:14px 12px;border-radius:12px;font-size:15px;font-weight:800;touch-action:manipulation}
-      .jp-mobile-hero{position:relative;width:100%;height:min(430px,55dvh);min-height:340px;background:url('site-reference.jpeg?v=mobile-hero-4') center 82%/220% auto no-repeat #000;border-bottom:1px solid #5c3b1a;cursor:pointer;touch-action:manipulation}
-      .jp-mobile-hero:after{content:'VER PRODUTOS →';position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:78%;max-width:340px;padding:13px 14px;border:1px solid #b97a22;background:rgba(223,167,53,.96);color:#080808;border-radius:999px;text-align:center;font-weight:900;font-size:14px;line-height:1.2;box-sizing:border-box}
-      .jp-mobile-benefits{display:grid;grid-template-columns:1fr;gap:1px;background:#3f2913;border-bottom:1px solid #5c3b1a}
-      .jp-mobile-benefits div{background:#080808;padding:16px 10px;text-align:center;color:#cdb98f;font-size:11px;min-height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center}
-      .jp-mobile-benefits b{display:block;color:#efbd5a;font-size:10px;margin-bottom:2px}
-      .jp-mobile-section{padding:26px 16px;background:#020202}
-      .jp-mobile-section h2{margin:0;text-align:center;color:#efbd5a;font-family:Georgia,serif;font-size:28px;letter-spacing:.8px}
-      .jp-mobile-section .sub{margin:8px 0 20px;text-align:center;color:#a99368;font-size:13px}
-      .jp-mobile-catgrid{display:grid;grid-template-columns:1fr;gap:14px}
-      .jp-mobile-cat{min-height:64px;border:1px solid #6f471d;background:#0a0a0a;color:#efbd5a;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;padding:16px 12px;text-align:center;touch-action:manipulation}
-      .jp-mobile-products{display:block!important;padding:0 14px 26px;background:#020202}
-      .jp-mobile-productgrid{display:grid;grid-template-columns:1fr;gap:16px}
-      .jp-mobile-card{background:#0b0b0b;border:1px solid #5d3b18;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
-      .jp-mobile-card img{width:100%;aspect-ratio:1/1;object-fit:contain;background:#111;display:block}
-      .jp-mobile-cardbody{padding:10px;display:flex;flex-direction:column;gap:5px;flex:1}
-      .jp-mobile-card h3{margin:0;color:#fff;font-size:18px;line-height:1.25}
-      .jp-mobile-price{color:#efbd5a;font-size:22px;font-weight:900}
-      .jp-mobile-stock{color:#9b9b9b;font-size:13px}
-      .jp-mobile-card button{margin-top:auto;min-height:54px;border:1px solid #b77a22;background:#dca33b;color:#080808;border-radius:10px;padding:12px 10px;font-weight:900;font-size:15px;touch-action:manipulation}
-      .jp-mobile-more{width:100%;min-height:50px;margin-top:16px;border:1px solid #8a5b20;background:#111;color:#efbd5a;border-radius:10px;padding:12px;font-weight:900;touch-action:manipulation}
-      .jp-mobile-footer{padding:18px 14px 28px;border-top:1px solid #5c3b1a;background:#050505;text-align:center}
-      .jp-mobile-footer a{display:inline-flex;text-decoration:none;border:1px solid #8a5b20;color:#efbd5a;border-radius:999px;padding:11px 18px;font-size:12px;font-weight:900}
+      .jp-mobile-site{display:block!important;width:100%!important;min-height:100dvh!important;background:#000!important;color:#fff!important;line-height:1.3!important;overflow-x:hidden!important}
+
+      .jp-m-announce{height:48px;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 14px;background:#070707;border-bottom:1px solid #5c3b1a;color:#e6c98d;font-size:12px;font-weight:700;letter-spacing:.4px}
+
+      .jp-m-bar{height:64px;display:grid;grid-template-columns:1fr auto;align-items:center;padding:0 16px;background:#050505;border-bottom:1px solid #5c3b1a}
+      .jp-m-menu{display:flex;align-items:center;gap:12px;background:transparent;border:0;color:#fff;padding:0;font-size:17px;font-weight:800;min-height:44px}
+      .jp-m-menu svg,.jp-m-searchbtn svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+      .jp-m-searchbtn{width:48px;height:48px;border:0;background:transparent;color:#fff;display:grid;place-items:center}
+
+      .jp-m-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:#0a0a0a;border-bottom:1px solid #5c3b1a}
+      .jp-m-action{position:relative;min-height:96px;border:0;background:#0a0a0a;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:700}
+      .jp-m-action svg{width:30px;height:30px;stroke:#efbd5a;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+      .jp-m-count{position:absolute;top:18px;left:calc(50% + 14px);min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#e7a934;color:#080808;font-size:10px;font-weight:900;display:grid;place-items:center}
+
+      .jp-m-brand{padding:26px 16px 22px;text-align:center;background:#090909}
+      .jp-m-logo{display:inline-flex;align-items:center;justify-content:center;gap:10px;color:#efbd5a}
+      .jp-m-logo-mark{font-family:Georgia,serif;font-size:64px;font-weight:900;line-height:.86}
+      .jp-m-logo-copy{text-align:left}
+      .jp-m-logo-copy strong{display:block;font-family:Georgia,serif;font-size:24px;letter-spacing:1.2px}
+      .jp-m-logo-copy small{display:block;color:#c1a66e;font-size:9px;letter-spacing:1.2px;margin-top:4px}
+
+      .jp-m-search{display:flex;width:calc(100% - 32px);height:52px;margin:0 16px 20px;border:1px solid #8a5b20;border-radius:26px;overflow:hidden;background:#0c0c0c}
+      .jp-m-search input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#fff;padding:0 16px;font-size:16px}
+      .jp-m-search button{width:58px;border:0;background:#e3a735;color:#080808;font-size:20px;font-weight:900}
+
+      .jp-m-hero{position:relative;width:100%;height:400px;overflow:hidden;background:#000;border-top:1px solid #5c3b1a;border-bottom:1px solid #5c3b1a}
+      .jp-m-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 54%;transform:scale(1.65)}
+      .jp-m-hero:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.12) 55%,rgba(0,0,0,.78))}
+      .jp-m-hero-cta{position:absolute;z-index:2;left:24px;right:24px;bottom:24px;min-height:56px;border:1px solid #b97a22;background:#dfa735;color:#080808;border-radius:28px;font-size:16px;font-weight:900}
+
+      .jp-m-benefits{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:#4a3014}
+      .jp-m-benefit{min-height:84px;background:#080808;padding:14px 10px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+      .jp-m-benefit b{display:block;color:#efbd5a;font-size:12px;margin-bottom:4px}
+      .jp-m-benefit span{color:#c7b388;font-size:11px}
+
+      .jp-m-whatsapp{padding:28px 18px;text-align:center;background:#f7f4ec;color:#1b2430}
+      .jp-m-whatsapp strong{display:block;font-size:22px;letter-spacing:2px}
+      .jp-m-whatsapp span{display:block;margin-top:8px;font-size:18px;letter-spacing:2px}
+      .jp-m-whatsapp a{display:inline-flex;align-items:center;justify-content:center;min-width:220px;min-height:50px;margin-top:18px;border-radius:25px;background:#111;color:#efbd5a;text-decoration:none;font-weight:900;border:1px solid #8a5b20}
+
+      .jp-m-section{padding:28px 16px;background:#020202}
+      .jp-m-section h2{margin:0;text-align:center;color:#efbd5a;font-family:Georgia,serif;font-size:28px;letter-spacing:1px}
+      .jp-m-section p{margin:6px 0 20px;text-align:center;color:#a99368;font-size:12px}
+
+      .jp-m-cats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+      .jp-m-cat{min-height:74px;border:1px solid #6f471d;background:#0b0b0b;color:#efbd5a;border-radius:12px;font-size:14px;font-weight:900;padding:12px}
+
+      .jp-m-products{display:grid;grid-template-columns:1fr;gap:16px}
+      .jp-m-card{background:#0b0b0b;border:1px solid #5d3b18;border-radius:14px;overflow:hidden}
+      .jp-m-card img{display:block;width:100%;aspect-ratio:1.2/1;object-fit:contain;background:#111}
+      .jp-m-cardbody{padding:14px}
+      .jp-m-card h3{margin:0 0 6px;font-size:18px}
+      .jp-m-price{color:#efbd5a;font-size:22px;font-weight:900;margin-bottom:4px}
+      .jp-m-stock{color:#aaa;font-size:12px;margin-bottom:12px}
+      .jp-m-card button,.jp-m-more{width:100%;min-height:52px;border:1px solid #b77a22;background:#dca33b;color:#080808;border-radius:10px;font-weight:900;font-size:14px}
+      .jp-m-more{margin-top:14px;background:#111;color:#efbd5a}
+
+      .jp-m-footer{padding:22px 16px 34px;text-align:center;background:#050505;border-top:1px solid #5c3b1a;color:#a99368;font-size:12px}
+
       .overlay{align-items:flex-start!important;padding:6px!important}
       .modal{width:100%!important;max-height:96dvh!important;border-radius:12px!important}
       .products-grid{grid-template-columns:1fr!important;padding:10px!important}
@@ -59,45 +77,124 @@
   `;
   document.head.appendChild(style);
 
-  document.querySelectorAll('.jp-mobile-continuation,.jp-mobile-original,.jp-mobile-products,.jp-mobile-nav,.jp-mobile-site').forEach(el=>el.remove());
+  document.querySelectorAll('.jp-mobile-site,.jp-mobile-continuation,.jp-mobile-original,.jp-mobile-products,.jp-mobile-nav').forEach(el=>el.remove());
 
   const mobile=document.createElement('main');
   mobile.className='jp-mobile-site';
   mobile.innerHTML=`
-    <section class="jp-mobile-top"><div><b>ENTREGA RÁPIDA</b>Para todo o Brasil</div><div><b>COMPRA SEGURA</b>Seus dados protegidos</div><div><b>ATENDIMENTO</b>Tire suas dúvidas</div></section>
-    <header class="jp-mobile-head">
-      <div class="jp-mobile-brandrow">
-        <div class="jp-mobile-brand"><div class="jp-mobile-mark">JP</div><div class="jp-mobile-brandtext"><strong>IMPORTADOS</strong><small>O MUNDO AO SEU ALCANCE</small></div></div>
-        <div class="jp-mobile-icons">
-          <button class="jp-mobile-icon" type="button" onclick="openProfile()" aria-label="Perfil"><svg viewBox="0 0 32 32"><circle cx="16" cy="10" r="5"></circle><path d="M7 27c0-6 4-10 9-10s9 4 9 10"></path></svg></button>
-          <button class="jp-mobile-icon" type="button" onclick="openFavorites()" aria-label="Favoritos"><svg viewBox="0 0 32 32"><path d="M16 27S5 20.5 5 11.8C5 7.8 8 5 11.6 5c2.2 0 3.7 1.1 4.4 2.4C16.7 6.1 18.2 5 20.4 5 24 5 27 7.8 27 11.8 27 20.5 16 27 16 27Z"></path></svg></button>
-          <button class="jp-mobile-icon" type="button" onclick="openCart()" aria-label="Carrinho"><svg viewBox="0 0 32 32"><path d="M5 7h3l2.2 12h12.6l2.3-8H9.2"></path><circle cx="13" cy="25" r="1.5"></circle><circle cx="23" cy="25" r="1.5"></circle></svg><span class="jp-mobile-badge" id="jpMobileBadge">0</span></button>
-        </div>
+    <div class="jp-m-announce">JP IMPORTADOS • QUALIDADE • ESTILO • CONFIANÇA</div>
+
+    <div class="jp-m-bar">
+      <button class="jp-m-menu" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Início">
+        <svg viewBox="0 0 32 32"><path d="M5 8h22M5 16h22M5 24h22"></path></svg>
+        <span>INÍCIO</span>
+      </button>
+      <button class="jp-m-searchbtn" type="button" onclick="document.getElementById('jpMSearchInput').focus()" aria-label="Pesquisar">
+        <svg viewBox="0 0 32 32"><circle cx="14" cy="14" r="8"></circle><path d="m20 20 7 7"></path></svg>
+      </button>
+    </div>
+
+    <div class="jp-m-actions">
+      <button class="jp-m-action" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg viewBox="0 0 32 32"><path d="M5 15 16 6l11 9v12H9V15"></path><path d="M13 27v-8h6v8"></path></svg>
+        <span>INÍCIO</span>
+      </button>
+      <button class="jp-m-action" type="button" onclick="openProducts()">
+        <svg viewBox="0 0 32 32"><rect x="5" y="6" width="8" height="8"></rect><rect x="19" y="6" width="8" height="8"></rect><rect x="5" y="19" width="8" height="8"></rect><rect x="19" y="19" width="8" height="8"></rect></svg>
+        <span>PRODUTOS</span>
+      </button>
+      <button class="jp-m-action" type="button" onclick="openCart()">
+        <svg viewBox="0 0 32 32"><path d="M5 7h3l2.2 12h12.6l2.3-8H9.2"></path><circle cx="13" cy="25" r="1.5"></circle><circle cx="23" cy="25" r="1.5"></circle></svg>
+        <span>CARRINHO</span>
+        <span class="jp-m-count" id="jpMCartCount">0</span>
+      </button>
+    </div>
+
+    <section class="jp-m-brand">
+      <div class="jp-m-logo">
+        <div class="jp-m-logo-mark">JP</div>
+        <div class="jp-m-logo-copy"><strong>IMPORTADOS</strong><small>O MUNDO AO SEU ALCANCE</small></div>
       </div>
-      <div class="jp-mobile-searchwrap"><input id="jpMobileSearch" type="search" placeholder="O que você está procurando?" aria-label="Pesquisar produtos"><button id="jpMobileSearchBtn" type="button">⌕</button></div>
-    </header>
-    <nav class="jp-mobile-nav"><button type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})">INÍCIO</button><button type="button" onclick="openProducts()">PRODUTOS</button><button type="button" onclick="openAbout()">SOBRE NÓS</button><button type="button" onclick="openContact()">CONTATO</button></nav>
-    <section class="jp-mobile-hero" role="button" tabindex="0" aria-label="Ver produtos" onclick="openProducts()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openProducts()}"></section>
-    <section class="jp-mobile-benefits"><div><b>PRODUTOS ORIGINAIS</b>Com garantia</div><div><b>ENVIO RÁPIDO</b>E rastreamento</div><div><b>COMPRA SEGURA</b>Dados protegidos</div><div><b>ATENDIMENTO</b>Antes e depois da compra</div></section>
-    <section class="jp-mobile-section"><h2>CATEGORIAS</h2><p class="sub">ENCONTRE O QUE VOCÊ PRECISA</p><div class="jp-mobile-catgrid"><button class="jp-mobile-cat" onclick="openProducts('Tênis')">TÊNIS</button><button class="jp-mobile-cat" onclick="openProducts('Roupas')">ROUPAS</button><button class="jp-mobile-cat" onclick="openProducts('Relógios')">RELÓGIOS</button><button class="jp-mobile-cat" onclick="openProducts('Bolsas')">BOLSAS</button><button class="jp-mobile-cat" onclick="openProducts('Perfumes')">PERFUMES</button><button class="jp-mobile-cat" onclick="openProducts('Óculos')">ÓCULOS</button><button class="jp-mobile-cat" onclick="openProducts('Eletrônicos')">ELETRÔNICOS</button><button class="jp-mobile-cat" onclick="openProducts()">VER TODOS</button></div></section>
-    <section class="jp-mobile-section" style="padding-bottom:10px"><h2>PRODUTOS</h2><p class="sub">ESCOLHA SEU PRODUTO</p></section>
-    <section class="jp-mobile-products"><div class="jp-mobile-productgrid" id="jpMobileProductGrid"></div><button class="jp-mobile-more" type="button" onclick="openProducts()">VER TODOS OS PRODUTOS</button></section>
-    <footer class="jp-mobile-footer"><a href="https://wa.me/5511974979901" target="_blank" rel="noopener">FALAR NO WHATSAPP</a></footer>`;
+    </section>
+
+    <div class="jp-m-search">
+      <input id="jpMSearchInput" type="search" placeholder="O que você está procurando?" aria-label="Pesquisar produtos">
+      <button id="jpMSearchBtn" type="button" aria-label="Pesquisar">⌕</button>
+    </div>
+
+    <section class="jp-m-hero">
+      <img src="site-reference.jpeg?v=mobile-example-1" alt="JP Importados">
+      <button class="jp-m-hero-cta" type="button" onclick="openProducts()">VER PRODUTOS →</button>
+    </section>
+
+    <section class="jp-m-benefits">
+      <div class="jp-m-benefit"><b>PRODUTOS ORIGINAIS</b><span>Com garantia</span></div>
+      <div class="jp-m-benefit"><b>ENVIO RÁPIDO</b><span>E rastreamento</span></div>
+      <div class="jp-m-benefit"><b>COMPRA SEGURA</b><span>Dados protegidos</span></div>
+      <div class="jp-m-benefit"><b>ATENDIMENTO</b><span>Tire suas dúvidas</span></div>
+    </section>
+
+    <section class="jp-m-whatsapp">
+      <strong>WHATSAPP</strong>
+      <span>(11) 97497-9901</span>
+      <a href="https://wa.me/5511974979901" target="_blank" rel="noopener">FALAR NO WHATSAPP</a>
+    </section>
+
+    <section class="jp-m-section">
+      <h2>CATEGORIAS</h2>
+      <p>ENCONTRE O QUE VOCÊ PRECISA</p>
+      <div class="jp-m-cats">
+        <button class="jp-m-cat" onclick="openProducts('Tênis')">TÊNIS</button>
+        <button class="jp-m-cat" onclick="openProducts('Roupas')">ROUPAS</button>
+        <button class="jp-m-cat" onclick="openProducts('Relógios')">RELÓGIOS</button>
+        <button class="jp-m-cat" onclick="openProducts('Bolsas')">BOLSAS</button>
+        <button class="jp-m-cat" onclick="openProducts('Perfumes')">PERFUMES</button>
+        <button class="jp-m-cat" onclick="openProducts('Óculos')">ÓCULOS</button>
+        <button class="jp-m-cat" onclick="openProducts('Eletrônicos')">ELETRÔNICOS</button>
+        <button class="jp-m-cat" onclick="openProducts()">VER TODOS</button>
+      </div>
+    </section>
+
+    <section class="jp-m-section">
+      <h2>PRODUTOS</h2>
+      <p>ESCOLHA SEU PRODUTO</p>
+      <div class="jp-m-products" id="jpMProducts"></div>
+      <button class="jp-m-more" type="button" onclick="openProducts()">VER TODOS OS PRODUTOS</button>
+    </section>
+
+    <footer class="jp-m-footer">JP Importados • Compra simples e segura</footer>
+  `;
+
   document.body.insertBefore(mobile,document.body.firstChild);
 
-  const list=(window.products||[]).slice(0,6);
-  const grid=document.getElementById('jpMobileProductGrid');
-  const money=v=>Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-  if(grid)grid.innerHTML=list.map(p=>`<article class="jp-mobile-card"><img src="${p.img}" alt="${p.name}"><div class="jp-mobile-cardbody"><h3>${p.name}</h3><div class="jp-mobile-price">${money(p.price)}</div><div class="jp-mobile-stock">${p.stock} unid. em estoque</div><button type="button" onclick="openProduct('${p.id}')">VER PRODUTO</button></div></article>`).join('');
+  const sourceProducts=(typeof products!=='undefined' && Array.isArray(products)) ? products : [];
+  const grid=document.getElementById('jpMProducts');
+  const moneyMobile=v=>Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+  if(grid){
+    grid.innerHTML=sourceProducts.slice(0,6).map(p=>`
+      <article class="jp-m-card">
+        <img src="${p.img}" alt="${p.name}">
+        <div class="jp-m-cardbody">
+          <h3>${p.name}</h3>
+          <div class="jp-m-price">${moneyMobile(p.price)}</div>
+          <div class="jp-m-stock">${p.stock} unid. em estoque</div>
+          <button type="button" onclick="openProduct('${p.id}')">VER PRODUTO</button>
+        </div>
+      </article>
+    `).join('');
+  }
 
-  const search=document.getElementById('jpMobileSearch');
-  const searchBtn=document.getElementById('jpMobileSearchBtn');
-  function doSearch(){const original=document.getElementById('searchInput');if(original){original.value=search.value;original.dispatchEvent(new Event('input',{bubbles:true}));}openProducts();}
-  searchBtn.addEventListener('click',doSearch);
-  search.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doSearch();}});
+  const search=document.getElementById('jpMSearchInput');
+  const searchBtn=document.getElementById('jpMSearchBtn');
+  function doSearch(){
+    const q=(search&&search.value||'').trim();
+    q?openProducts('',q):openProducts();
+  }
+  if(searchBtn)searchBtn.addEventListener('click',doSearch);
+  if(search)search.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doSearch();}});
 
   const originalBadge=document.getElementById('cartBadge');
-  const mobileBadge=document.getElementById('jpMobileBadge');
+  const mobileBadge=document.getElementById('jpMCartCount');
   function syncBadge(){if(originalBadge&&mobileBadge)mobileBadge.textContent=originalBadge.textContent||'0';}
   syncBadge();
   if(originalBadge&&window.MutationObserver)new MutationObserver(syncBadge).observe(originalBadge,{childList:true,subtree:true,characterData:true});
